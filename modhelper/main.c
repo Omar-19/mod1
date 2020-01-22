@@ -2,7 +2,16 @@
 
 double sum_dio(t_map *map, int i)
 {
-	// while
+	int	j;
+	int	row;
+
+	// j = 0;
+	// row = i / ROW_SIZE * ROW_SIZE - ((i % ROW_SIZE < RADIUS))
+	// while (j <= (int)(RADIUS * 2))
+	// {
+	// 	// row = ROW_SIZE * j;
+
+	// }
 }
 
 void	altitude_calculation(t_map *map)

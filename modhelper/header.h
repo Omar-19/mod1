@@ -3,6 +3,7 @@
 # include "stdio.h"
 # include "stdlib.h"
 # define MAP_SIZE 9
+# define ROW_SIZE 3
 # define RADIUS 2
 # define POWER 2
 
