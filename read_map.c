@@ -42,8 +42,7 @@ void	psudo(t_point	*mp, int x, int y)
 		j = (x - RADIUS < 0) ? 0 : x - RADIUS;
 		while (j < jmax)
 		{
-			//if (sqrt((pow(i - x, 2) + pow(j - y, 2))) <= RADIUS && mp[i * 100 + j].op != 1) +++
-			if (sqrt((pow(i - x, 2) + pow(j - y, 2))) < RADIUS && mp[i * 100 + j].op != 1)
+			if (sqrt((pow(i - y, 2) + pow(j - x, 2))) < RADIUS && mp[i * 100 + j].op != 1)
 				mp[i * 100 + j].op = 0;
 			j++;
 		}
@@ -66,8 +65,6 @@ void	init_coor(t_point	*mp, char **tab)
 	{
 		line = tab[i];
 		fl = ft_strsplit(line + 1, ',');
-		// ft_printf("%s %s %s\n", fl[0], fl[1], fl[2]);
-		// ft_printf("%d %d %d\n", (ft_atoi(fl[0]) / 2), (ft_atoi(fl[1])/ 200),ft_atoi(fl[2]) / 200);
 		mp[(ft_atoi(fl[0]) / 2) + (ft_atoi(fl[1])/ 200)].z = ft_atoi(fl[2]) / 200;
 		mp[(ft_atoi(fl[0]) / 2) + (ft_atoi(fl[1])/ 200)].op = 1;
 		x = (ft_atoi(fl[0]) / 2) + (ft_atoi(fl[1])/ 200);
