@@ -1,5 +1,7 @@
 {
     "files.associations": {
-        "mod_h.h": "c"
+        "mod_h.h": "c",
+        "complex": "c",
+        "cmath": "c"
     }
 }
