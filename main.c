@@ -114,7 +114,7 @@ int main(int ac, char **av)
     altitude_calculation(&map);
 	while (i < MAP_SIZE)
 	{
-		ft_printf("%2d ", map.mp[i].z);
+		ft_printf("%2d ", map.mp[i].op);
 		if ((i + 1) % 100 == 0)
 			write(1, "\n", 1);
 		i++; 

@@ -2,7 +2,7 @@
 # define MOD_H
 # define MAP_SIZE 10000
 # define ROW_SIZE 100
-# define RADIUS 20
+# define RADIUS 30
 # define POWER 3
 # define EDGE 1
 # include "libft/includes/header.h"
