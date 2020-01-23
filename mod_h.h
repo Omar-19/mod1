@@ -1,7 +1,12 @@
 #ifndef MOD_H
 # define MOD_H
-# include "libft/includes/header.h"
 # define MAP_SIZE 10000
+# define ROW_SIZE 100
+# define RADIUS 20
+# define POWER 2
+# define EDGE 1
+# include "libft/includes/header.h"
+# include <math.h>
 
 typedef struct			s_point
 {

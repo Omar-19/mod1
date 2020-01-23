@@ -109,13 +109,14 @@ int main(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	init_map(map.mp);
 	read_map(fd, &map);
-	int i = 0;
-	while (i < MAP_SIZE)
-	{
-		ft_printf("%d ", map.mp[i].z);
-		if ((i + 1) % 100 == 0)
-			write(1, "\n", 1);
-		i++; 
-	}
+	// int i = 0;
+	// while (i < MAP_SIZE)
+	// {
+	// 	ft_printf("%d ", map.mp[i].z);
+	// 	if ((i + 1) % 100 == 0)
+	// 		write(1, "\n", 1);
+	// 	i++; 
+	// }
+    //altitude_calculation(map);
     return (0);
 }
