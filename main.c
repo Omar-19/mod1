@@ -50,6 +50,7 @@ void endSDL()
     SDL_Quit();
 }
 
+
 int main(int ac, char **av)
 {
     // initGLandSDL();
@@ -110,11 +111,12 @@ int main(int ac, char **av)
 	init_map(map.mp);
 	read_map(fd, &map);
     init_x_y(&map);
+    null_border(&map);
 	int i = 0;
     altitude_calculation(&map);
 	while (i < MAP_SIZE)
 	{
-		ft_printf("%2d ", map.mp[i].op);
+		ft_printf("%2d ", map.mp[i].z);
 		if ((i + 1) % 100 == 0)
 			write(1, "\n", 1);
 		i++; 

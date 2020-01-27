@@ -3,7 +3,7 @@
 # define MAP_SIZE 10000
 # define ROW_SIZE 100
 # define RADIUS 30
-# define POWER 3
+# define POWER 2
 # define EDGE 1
 # include "libft/includes/header.h"
 # include <math.h>
@@ -30,6 +30,6 @@ void					init_coor(t_point	*mp, char **tab);
 void    				read_map(int fd, t_map *map);
 void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
-
+void					null_border(t_map *map);
 
 #endif

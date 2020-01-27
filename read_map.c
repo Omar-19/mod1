@@ -7,8 +7,8 @@ void	init_map(t_point *mp)
 	i = 0;
 	while (i < MAP_SIZE)
 	{
-		mp[i].z = 0; // = 0
-		mp[i].op = -1;
+		mp[i].z = 0;
+		mp[i].op = -1; // -1; ++++++++++++++++
 		mp[i].x = 0;
 		mp[i].y = 0;
 		i++;
@@ -25,6 +25,15 @@ void	init_x_y(t_map *map)
 		map->mp[i].y = i / ROW_SIZE;
 		map->mp[i].x = i % ROW_SIZE;
 	}
+}
+
+void    null_border(t_map *map)
+{
+	int i = -1;
+
+	while (++i < MAP_SIZE)
+		if (map->mp[i].x == 0 || map->mp[i].x == (ROW_SIZE - 1) || map->mp[i].y == 0 || map->mp[i].y == (ROW_SIZE - 1))
+			map->mp[i].op = 1;
 }
 
 void	psudo(t_point	*mp, int x, int y)
