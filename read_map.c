@@ -8,7 +8,7 @@ void	init_map(t_point *mp)
 	while (i < MAP_SIZE)
 	{
 		mp[i].z = 0;
-		mp[i].op = -1; // -1; ++++++++++++++++
+		mp[i].op = -1;//-1;// ++++++++++++++++
 		mp[i].x = 0;
 		mp[i].y = 0;
 		i++;

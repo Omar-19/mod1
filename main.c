@@ -24,7 +24,7 @@ void initGLandSDL()
 
     win = SDL_CreateWindow("Mod1",
                            SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
-                           800, 600,
+                           1000, 1000,
                            SDL_WINDOW_SHOWN | SDL_WINDOW_OPENGL);
 
     SDL_GLContext glcontext = SDL_GL_CreateContext(win); // создаем контекст OpenGL
@@ -50,62 +50,18 @@ void endSDL()
     SDL_Quit();
 }
 
+int	color_red(int h_max, int h)
+{
+	float step = (191 - 136) / h_max;
+	return (136 + (int)(h * step));
+}
 
 int main(int ac, char **av)
 {
-    // initGLandSDL();
-    // SDL_Event event;
-    // int running = 1;
-	// glScalef(0.5f, 0.5f, 0.5f);
-    // while (running)
-    // {
-    //     glClear(GL_COLOR_BUFFER_BIT);
-    //     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        
-    //     while ( SDL_PollEvent(&event) )
-    //     {
-    //         switch(event.type)
-    //         {
-    //             case SDL_QUIT:
-    //                 running = 0;
-    //                 break;
-    //         }
-    //     }
-        
-	// 	 // 1 1 0
-	// 	 // 2 2 5
-	// 	 // 1 2 7
-	// 	 // 2 1 3
-    //     glBegin(GL_POLYGON);
-    //     glColor3f(1.0f, 0.0f, 0.0f);
-    //     glVertex3f(0.0f, 0.0f, 0.0f);
-
-	// 	glColor3f(1.0f, 1.0f, 1.0f);
-    //     glVertex3f(1.0f, 0.0f, 0.0f);
-
-	// 	glColor3f(0.0f, 1.0f, 0.0f);
-    //     glVertex3f(1.0f, 1.0f, 0.0f);
-
-    //     glColor3f(0.0f, 0.0f, 1.0f);
-    //     glVertex3f(0.0f, 1.0f, 0.0f);
-
-	// 	glColor3f(0.0f, 0.0f, 1.0f);
-    //     glVertex3f(-0.5f, 0.5f, 0.0f);
-
-	// 	glColor3f(0.0f, 0.0f, 1.0f);
-    //     glVertex3f(-0.5f, -0.7f, 0.0f);
-
-	// 	glColor3f(0.0f, 0.0f, 1.0f);
-    //     glVertex3f(0.7f, -0.5f, 0.0f);
-
-	// 	glColor3f(0.0f, 0.0f, 1.0f);
-    //     glVertex3f(1.0f, 0.0f, 0.0f);
-
-    //     glEnd();
-    //     SDL_GL_SwapWindow(win);
-    // }
+    
 	t_map map;
 	int fd;
+	int red;
 
 	fd = open(av[1], O_RDONLY);
 	init_map(map.mp);
@@ -114,12 +70,77 @@ int main(int ac, char **av)
     null_border(&map);
 	int i = 0;
     altitude_calculation(&map);
-	while (i < MAP_SIZE)
-	{
-		ft_printf("%2d ", map.mp[i].z);
-		if ((i + 1) % 100 == 0)
-			write(1, "\n", 1);
-		i++; 
-	}
+	// while (i < MAP_SIZE)
+	// {
+	// 	ft_printf("%2d ", map.mp[i].z);
+	// 	if ((i + 1) % 100 == 0)
+	// 		write(1, "\n", 1);
+	// 	i++; 
+	// }
+
+    initGLandSDL();
+    SDL_Event event;
+    int running = 1;
+	glScalef(0.005f, 0.005f, 0.005f);
+    i = 0;
+	int j = 0;
+    while (running)
+    {
+        glClear(GL_COLOR_BUFFER_BIT);
+        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        
+        while ( SDL_PollEvent(&event) )
+        {
+            switch(event.type)
+            {
+                case SDL_QUIT:
+                    running = 0;
+                    break;
+            }
+        }
+        
+		 // 1 1 0
+		 // 2 2 5
+		 // 1 2 7
+		 // 2 1 3
+		// glBegin(GL_POLYGON);
+		i = 0;
+		j = 0;
+        while (i < 99)
+        {
+			j = -1;
+			while (++j < 99)
+			{
+				glBegin(GL_POLYGON);
+				glColor3ub(color_red(25, map.mp[i * 100 + j].z), 191, 69);
+				glVertex3f((0.0f + (float)(i)), (0.0f + (float)(j)), 0.0f);
+
+				glColor3ub(color_red(25, map.mp[(i + 1) * 100 + j].z), 191, 69);
+				glVertex3f((1.0f + (float)(i)), (0.0f + (float)(j)), 0.0f);
+
+				glColor3ub(color_red(25, map.mp[(i + 1) * 100 + (j + 1)].z), 191, 69);
+				glVertex3f((1.0f + (float)(i)), (1.0f + (float)(j)), 0.0f);
+
+				glColor3ub(color_red(25, map.mp[i * 100 + (j + 1)].z), 191, 69);
+				glVertex3f((0.0f + (float)(i)), (1.0f + (float)(j)), 0.0f);
+				glEnd();
+			}
+			i += 1;
+        }
+        glEnd();
+		SDL_GL_SwapWindow(win);
+		// glColor3f(0.0f, 0.0f, 1.0f);
+        // glVertex3f(-0.5f, 0.5f, 0.0f);
+
+		// glColor3f(0.0f, 0.0f, 1.0f);
+        // glVertex3f(-0.5f, -0.7f, 0.0f);
+
+		// glColor3f(0.0f, 0.0f, 1.0f);
+        // glVertex3f(0.7f, -0.5f, 0.0f);
+
+		// glColor3f(0.0f, 0.0f, 1.0f);
+        // glVertex3f(1.0f, 0.0f, 0.0f);
+ 
+    }
     return (0);
 }
