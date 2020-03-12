@@ -11,6 +11,8 @@ void	init_map(t_point *mp)
 		mp[i].op = -1;//-1;// ++++++++++++++++
 		mp[i].x = 0;
 		mp[i].y = 0;
+		mp[i].wh = 0;
+		mp[i].wh1 = 0;
 		i++;
 	}
 }

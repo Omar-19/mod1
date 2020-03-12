@@ -16,6 +16,8 @@ typedef struct			s_point
 	int					op;
 	int					x;
 	int					y;
+	float				wh;
+	float				wh1;
 }						t_point;
 
 typedef struct			s_map
@@ -31,5 +33,9 @@ void    				read_map(int fd, t_map *map);
 void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
 void					null_border(t_map *map);
+void    				up_water(t_point *mp);
+float					check_w(t_point *mp, int i, int j, float n);
+void					wave_calc(t_point *mp);
+void					update_water(t_point *mp);
 
 #endif
