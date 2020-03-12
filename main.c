@@ -140,31 +140,30 @@ int main(int ac, char **av)
 
     // }
     j = 0;
-    while (j < 3)
+    while (j < 12)
     {
         i = 0;
-        if (j == 2)
+        if (j + 1)
         {
             while (i < MAP_SIZE)
             {
-                ft_printf("%2.0f", map.mp[i].wh);
+                ft_printf("%.2f ", map.mp[i].wh);
                 if ((i + 1) % 100 == 0)
                     write(1, "\n", 1);
                 i++;
             }
-            write(1, "bef calc\n", 8);
+            write(1, "bef calc\n", 9);
         }
-
         up_water(map.mp);
         wave_calc(map.mp);
         update_water(map.mp);
-        if (j == 2)
+        if (j + 1)
         {
             write(1, "after\n", 6);
             i = 0;
             while (i < MAP_SIZE)
             {
-                ft_printf("%2.0f ", map.mp[i].wh);
+                ft_printf("%.2f ", map.mp[i].wh);
                 if ((i + 1) % 100 == 0)
                     write(1, "\n", 1);
                 i++;

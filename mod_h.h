@@ -34,7 +34,7 @@ void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
 void					null_border(t_map *map);
 void    				up_water(t_point *mp);
-float					check_w(t_point *mp, int i, int j, float n);
+float					check_w(t_point *mp, int i, int j, float n, int *num);
 void					wave_calc(t_point *mp);
 void					update_water(t_point *mp);
 
