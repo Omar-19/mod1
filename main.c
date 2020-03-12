@@ -58,7 +58,7 @@ int	color_red(int h_max, int h)
 
 int main(int ac, char **av)
 {
-    
+
 	t_map map;
 	int fd;
 	int red;
@@ -77,7 +77,7 @@ int main(int ac, char **av)
 			// write(1, "\n", 1);
         if (map.mp[i].z)
             ft_printf("%d %d %d\n", i / 100, i % 100, map.mp[i].z);
-		i++; 
+		i++;
 	}
     write(1, "\n", 1);
     write(1, "water\n", 6);
@@ -91,7 +91,7 @@ int main(int ac, char **av)
     // {
     //     glClear(GL_COLOR_BUFFER_BIT);
     //     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        
+
     //     while ( SDL_PollEvent(&event) )
     //     {
     //         switch(event.type)
@@ -137,7 +137,7 @@ int main(int ac, char **av)
 
 	// 	// glColor3f(0.0f, 0.0f, 1.0f);
     //     // glVertex3f(1.0f, 0.0f, 0.0f);
- 
+
     // }
     j = 0;
     while (j < 3)
@@ -150,11 +150,11 @@ int main(int ac, char **av)
                 ft_printf("%2.0f", map.mp[i].wh);
                 if ((i + 1) % 100 == 0)
                     write(1, "\n", 1);
-                i++; 
+                i++;
             }
             write(1, "bef calc\n", 8);
         }
-        
+
         up_water(map.mp);
         wave_calc(map.mp);
         update_water(map.mp);
@@ -167,7 +167,7 @@ int main(int ac, char **av)
                 ft_printf("%2.0f ", map.mp[i].wh);
                 if ((i + 1) % 100 == 0)
                     write(1, "\n", 1);
-                i++; 
+                i++;
             }
             write(1, "\n\n\n\n", 4);
         }

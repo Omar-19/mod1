@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alg_watet.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btheia <btheia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/12 15:04:14 by btheia            #+#    #+#             */
-/*   Updated: 2020/03/12 16:56:04 by btheia           ###   ########.fr       */
+/*   Updated: 2020/03/12 20:52:54 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ float	check_w(t_point *mp, int i, int j, float n)
 	float	sum;
 
 	sum = -1;
-    if (i - 1 >= 0 && mp[(i - 1) * 100 + j].wh && n > mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh)
+    if (i - 1 >= 0 && mp[(i - 1) * 100 + j].wh )//&& n > mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh)
 		sum += mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh;
-	if (i + 1 < 100 && mp[(i + 1) * 100 + j].wh && n > mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh)
+	if (i + 1 < 100 && mp[(i + 1) * 100 + j].wh )//&& n > mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh)
 		sum += mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh;
-	if (j + 1 < 100 && mp[i * 100 + j + 1].wh && n > mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh)
+	if (j + 1 < 100 && mp[i * 100 + j + 1].wh)// && n > mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh)
 		sum += mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh;
-	if (j - 1 >= 0 && mp[i * 100 + j - 1].wh && n > mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh)
+	if (j - 1 >= 0 && mp[i * 100 + j - 1].wh)// && n > mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh)
 		sum += mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh;
 	// ft_printf("i = %d j = %d sum = %f\n", i, j, sum);
 	return (sum == -1.0) ? -1.0 : sum++;
