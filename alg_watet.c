@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/12 15:04:14 by btheia            #+#    #+#             */
-/*   Updated: 2020/03/12 21:43:59 by btheia           ###   ########.fr       */
+/*   Updated: 2020/03/13 12:14:40 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,34 +44,74 @@ float	check_w(t_point *mp, int i, int j, float n, int *num)
 	sum = -1;
 	if (i - 1 >= 0 && mp[(i - 1) * 100 + j].wh )//&& n > mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh)
 	{
-		// if (i == 0 && j == 0)
-		// 	ft_printf("TURT1\n");
 		(*num)++;
 		sum += mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh;
 	}
 	if (i + 1 < 100 && mp[(i + 1) * 100 + j].wh )//&& n > mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh)
 	{
-		// if (i == 0 && j == 0)
-		// 	ft_printf("TURT2\n");
 		(*num)++;
 		sum += mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh;
 	}
 
 	if (j + 1 < 100 && mp[i * 100 + j + 1].wh)// && n > mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh)
 	{
-		// if (i == 0 && j == 0)
-		// 	ft_printf("TURT3\n");
 		(*num)++;
 		sum += mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh;
 	}
 	if (j - 1 >= 0 && mp[i * 100 + j - 1].wh)// && n > mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh)
 	{
-		// if (i == 0 && j == 0)
-		// 	ft_printf("TURT4\n");
 		(*num)++;
 		sum += mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh;
 	}
-	// ft_printf("i = %d j = %d sum = %f\n", i, j, sum);
+	// if (i - 1 >= 0)//&& n > mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh)
+	// {
+	// 	if (mp[(i - 1) * 100 + j].z > n && !mp[(i - 1) * 100 + j].wh)
+	// 	{
+
+	// 	}
+	// 	else
+	// 	{
+	// 		(*num)++;
+	// 		sum += mp[(i - 1) * 100 + j].z + mp[(i - 1) * 100 + j].wh;
+	// 	}
+	// }
+	// if (i + 1 < 100)//&& n > mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh)
+	// {
+	// 	if (mp[(i + 1) * 100 + j].z > n && !mp[(i + 1) * 100 + j].wh)
+	// 	{
+
+	// 	}
+	// 	else
+	// 	{
+	// 		(*num)++;
+	// 		sum += mp[(i + 1) * 100 + j].z + mp[(i + 1) * 100 + j].wh;
+	// 	}
+	// }
+
+	// if (j + 1 < 100)// && n > mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh)
+	// {
+	// 	if ( mp[i * 100 + j + 1].z > n && !mp[i * 100 + j + 1].wh)
+	// 	{
+
+	// 	}
+	// 	else
+	// 	{
+	// 		(*num)++;
+	// 		sum += mp[i * 100 + j + 1].z + mp[i * 100 + j + 1].wh;
+	// 	}
+	// }
+	// if (j - 1 >= 0)// && n > mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh)
+	// {
+	// 	if (mp[i * 100 + j - 1].z > n && !mp[i * 100 + j - 1].wh)
+	// 	{
+
+	// 	}
+	// 	else
+	// 	{
+	// 		(*num)++;
+	// 		sum += mp[i * 100 + j - 1].z + mp[i * 100 + j - 1].wh;
+	// 	}
+	// }
 	return (sum == -1.0) ? -1.0 : ++sum;
 }
 
