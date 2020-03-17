@@ -1,9 +1,9 @@
 #ifndef MOD_H
 # define MOD_H
-# define MAP_SIZE 1000000
-# define ROW_SIZE 1000
+# define MAP_SIZE 250000
+# define ROW_SIZE 500
 # define SIZE_M 20000
-# define RADIUS 50
+# define RADIUS 70
 # define POWER 2
 # define EDGE 1
 # include "libft/includes/header.h"
@@ -17,6 +17,8 @@ typedef struct			s_point
 	int					op;
 	int					x;
 	int					y;
+	int					x1;
+	int					y1;
 	float				wh;
 	float				wh1;
 }						t_point;
@@ -28,12 +30,13 @@ typedef struct			s_map
 	int					size_a;
 	int					start;
 	int					rain_s;
+	int					max_h;
 	t_point				*mp;
 }						t_map;
 
 int						gnl(const int fd, char **line);
 void					init_map(t_point *mp);
-void					init_coor(t_point	*mp, char **tab);
+void					init_coor(t_point	*mp, char **tab, t_map *map);
 void    				read_map(int fd, t_map *map);
 void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
@@ -44,5 +47,6 @@ void					wave_calc(t_point *mp);
 void					update_water(t_point *mp);
 void					add_wave(t_map *map);
 void					add_rain(t_map *map);
+float					iso_x(float x, float y, float z, int i);
 
 #endif

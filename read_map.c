@@ -61,7 +61,7 @@ void	psudo(t_point	*mp, int x, int y)
 	}
 }
 
-void	init_coor(t_point	*mp, char **tab)
+void	init_coor(t_point	*mp, char **tab, t_map *map)
 {
 	int 	i;
 	char	*line;
@@ -76,6 +76,8 @@ void	init_coor(t_point	*mp, char **tab)
 		cord = (ft_atoi(fl[0]) * ROW_SIZE / SIZE_M) + (ft_atoi(fl[1]) * ROW_SIZE / SIZE_M) * ROW_SIZE;
 		mp[cord].z = ft_atoi(fl[2]) * ROW_SIZE / SIZE_M * 100;
 		mp[cord].op = 1;
+		if (mp[cord].z > map->max_h)
+			map->max_h = mp[cord].z;
 		// mp[(ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2].z = 3000;
 		// mp[(ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2].op = 1;
 		// x = (ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2;
@@ -98,12 +100,13 @@ void    read_map(int fd, t_map *map)
 	char	**tab;
 
 	line = NULL;
+	map->max_h = -1;
 	while (gnl(fd, &line))
 	{
 		if (line && *line)
 		{
 			tab = ft_strsplit(line, ' ');
-			init_coor(map->mp, tab);
+			init_coor(map->mp, tab, map);
 		}
 		free(line);
 	}
