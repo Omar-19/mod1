@@ -53,8 +53,8 @@ void	psudo(t_point	*mp, int x, int y)
 		j = (x - RADIUS < 0) ? 0 : x - RADIUS;
 		while (j < jmax)
 		{
-			if (sqrt((pow(i - y, 2) + pow(j - x, 2))) < RADIUS && mp[i * 100 + j].op != 1)
-				mp[i * 100 + j].op = 0;
+			if (sqrt((pow(i - y, 2) + pow(j - x, 2))) < RADIUS && mp[i * ROW_SIZE + j].op != 1)
+				mp[i * ROW_SIZE + j].op = 0;
 			j++;
 		}
 		i++;
@@ -66,23 +66,32 @@ void	init_coor(t_point	*mp, char **tab)
 	int 	i;
 	char	*line;
 	char	**fl;
-
-	int		x;
-	int		y;
-	int		z;
+	int		cord;
 
 	i = 0;
 	while (tab[i])
 	{
 		line = tab[i];
 		fl = ft_strsplit(line + 1, ',');
-		mp[(ft_atoi(fl[0]) / 2) + (ft_atoi(fl[1])/ 200)].z = ft_atoi(fl[2]) / 200;
-		mp[(ft_atoi(fl[0]) / 2) + (ft_atoi(fl[1])/ 200)].op = 1;
-		x = (ft_atoi(fl[0]) / 2) + (ft_atoi(fl[1])/ 200);
-		psudo(mp, x % 100, x / 100);
+		cord = (ft_atoi(fl[0]) * ROW_SIZE / SIZE_M) + (ft_atoi(fl[1]) * ROW_SIZE / SIZE_M) * ROW_SIZE;
+		mp[cord].z = ft_atoi(fl[2]) * ROW_SIZE / SIZE_M * 100;
+		mp[cord].op = 1;
+		// mp[(ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2].z = 3000;
+		// mp[(ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2].op = 1;
+		// x = (ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2;
+		psudo(mp, cord % ROW_SIZE, cord / ROW_SIZE);
 		i++;
 	}
+	// i = 0;
+	// while (i < MAP_SIZE)
+	// {
+	// 	ft_printf("%2d ", mp[i].z);
+	// 	if ((i + 1) % ROW_SIZE == 0)
+	// 		write(1, "\n", 1);
+	// 	i++;
+	// }
 }
+
 void    read_map(int fd, t_map *map)
 {
     char	*line;

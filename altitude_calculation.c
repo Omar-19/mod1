@@ -20,13 +20,13 @@ void	alpha(t_map *map, int x, int y, double sum_d)
 		while (j <= jmax) //(j < jmax) +++
 		{
 			// if (map->mp[i * 100 + j].op && sqrt((pow(i - x, 2) + pow(j - y, 2))) <= RADIUS)
-			if (map->mp[i * 100 + j].op && sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
-				z += (map->mp[i * 100 + j].d_io / sum_d) * map->mp[i * 100 + j].z;
+			if (map->mp[i * ROW_SIZE + j].op && sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
+				z += (map->mp[i * ROW_SIZE + j].d_io / sum_d) * map->mp[i * ROW_SIZE + j].z;
 			j++;
 		}
 		i++;
 	}
-	map->mp[x * 100 + y].z = z;
+	map->mp[x * ROW_SIZE + y].z = z;
 	// printf("   z = %d = %f\n", (int)(z), z);
 }
 
@@ -63,10 +63,10 @@ void    altitude(t_map *map, int x, int y)
 		{
 			// if (map->mp[i * 100 + j].op && sqrt((pow(i - x, 2) + pow(j - y, 2))) <= RADIUS) +++
 			// ft_printf("len = %lf  (%d, %d)\n", sqrt((pow(abs(i - x), 2) + pow(abs(j - y), 2))), j, i);
-			if (map->mp[i * 100 + j].op && sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
+			if (map->mp[i * ROW_SIZE + j].op && sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
 			{
-				map->mp[i * 100 + j].d_io = pow(sqrt((pow(i - y, 2) + pow(j - x, 2))), (-1) * POWER);
-				sum_d += map->mp[i * 100 + j].d_io;
+				map->mp[i * ROW_SIZE + j].d_io = pow(sqrt((pow(i - y, 2) + pow(j - x, 2))), (-1) * POWER);
+				sum_d += map->mp[i * ROW_SIZE + j].d_io;
 				++n_s_d;
 			}
 			j++;
