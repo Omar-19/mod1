@@ -46,8 +46,8 @@ void initGLandSDL()
 
 void endSDL()
 {
-    SDL_DestroyWindow(win);
-    SDL_Quit();
+	SDL_DestroyWindow(win);
+	SDL_Quit();
 }
 
 int	color_red(int h_max, int h)
@@ -64,13 +64,13 @@ int main(int ac, char **av)
 	int red;
 
 	fd = open(av[1], O_RDONLY);
-    map.mp = (t_point *)malloc(sizeof(t_point) * MAP_SIZE);
+	map.mp = (t_point *)malloc(sizeof(t_point) * MAP_SIZE);
 	init_map(map.mp);
 	read_map(fd, &map);
-    init_x_y(&map);
-    null_border(&map);
+	init_x_y(&map);
+	null_border(&map);
 	int i = 0;
-    altitude_calculation(&map);
+	altitude_calculation(&map);
 	while (i < MAP_SIZE)
 	{
 		ft_printf("%2d ", map.mp[i].z);
@@ -78,11 +78,11 @@ int main(int ac, char **av)
 			write(1, "\n", 1);
 		i++;
 	}
-    initGLandSDL();
-    SDL_Event event;
-    int running = 1;
+	initGLandSDL();
+	SDL_Event event;
+	int running = 1;
 	glScalef(0.0005f * 2, 0.0005f * 2, 0.0005f * 2);
-    i = 0;
+	i = 0;
 	int j = 0;
 
     // map.ar = 1; волна которая идет сверху
@@ -92,27 +92,25 @@ int main(int ac, char **av)
 	float x;
 	float y;
 	float z;
-    map.rain_s = 3;
-    ft_printf("max %d\n", map.max_h);
-    while (running)
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+	map.rain_s = 3;
+	while (running)
+	{
+		glClear(GL_COLOR_BUFFER_BIT);
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-        while ( SDL_PollEvent(&event) )
-        {
-            switch(event.type)
-            {
-                case SDL_QUIT:
-                    running = 0;
-                    break;
-            }
-        }
+		while ( SDL_PollEvent(&event) )
+		{
+			switch(event.type)
+			{
+				case SDL_QUIT:
+				running = 0;
+				break;
+			}
+		}
 		i = 0;
 		j = 0;
-        ft_printf("max %d\n", map.max_h);
-        while (i < ROW_SIZE - 1)
-        {
+		while (i < ROW_SIZE - 1)
+		{
 			j = -1;
 			while (++j < ROW_SIZE - 1)
 			{
@@ -153,40 +151,27 @@ int main(int ac, char **av)
                 //     glVertex3f((0.0f + (float)(i) - ROW_SIZE/2), (1.0f + (float)(j) - ROW_SIZE/2), 0.0f);
                 //     glEnd();
                 // }
-                
+
 			}
 			i += 1;
-        }
-        // sleep(2);
-        up_water(map.mp);
-        // add_rain(&map);
-        // i = 0;
-        // while (i < MAP_SIZE)
-        // {
-        //     ft_printf("%2d ", map.mp[i].wh);
-        //     if ((i + 1) % 100 == 0)
-        //         write(1, "\n", 1);
-        //     i++;
-        // }
-        // write(1, "\n", 1);
-        // write(1, "water\n", 6);
-        wave_calc(map.mp);
-        update_water(map.mp);
-        glEnd();
+		}
+		// sleep(2);
+		up_water(map.mp);
+		// add_rain(&map);
+		// i = 0;
+		// while (i < MAP_SIZE)
+		// {
+		//     ft_printf("%2d ", map.mp[i].wh);
+		//     if ((i + 1) % 100 == 0)
+		//         write(1, "\n", 1);
+		//     i++;
+		// }
+		// write(1, "\n", 1);
+		// write(1, "water\n", 6);
+		wave_calc(map.mp);
+		update_water(map.mp);
+		glEnd();
 		SDL_GL_SwapWindow(win);
-		// glColor3f(0.0f, 0.0f, 1.0f);
-        // glVertex3f(-0.5f, 0.5f, 0.0f);
-
-		// glColor3f(0.0f, 0.0f, 1.0f);
-        // glVertex3f(-0.5f, -0.7f, 0.0f);
-
-		// glColor3f(0.0f, 0.0f, 1.0f);
-        // glVertex3f(0.7f, -0.5f, 0.0f);
-
-		// glColor3f(0.0f, 0.0f, 1.0f);
-        // glVertex3f(1.0f, 0.0f, 0.0f);
-
-    }
-    
-    return (0);
+	}
+	return (0);
 }

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mod_h.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
+/*   Updated: 2020/03/17 19:43:37 by btheia           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MOD_H
 # define MOD_H
 # define MAP_SIZE 90000
@@ -6,6 +18,7 @@
 # define RADIUS 90
 # define POWER 2
 # define EDGE 1
+# define GL_SILENCE_DEPRECATION
 # include "libft/includes/header.h"
 # include <math.h>
 

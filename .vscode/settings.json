@@ -2,6 +2,7 @@
     "files.associations": {
         "mod_h.h": "c",
         "complex": "c",
-        "cmath": "c"
+        "cmath": "c",
+        "sdl.h": "c"
     }
 }
