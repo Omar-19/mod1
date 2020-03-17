@@ -1,9 +1,9 @@
 #ifndef MOD_H
 # define MOD_H
-# define MAP_SIZE 250000
-# define ROW_SIZE 500
+# define MAP_SIZE 90000
+# define ROW_SIZE 300
 # define SIZE_M 20000
-# define RADIUS 70
+# define RADIUS 90
 # define POWER 2
 # define EDGE 1
 # include "libft/includes/header.h"

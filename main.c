@@ -93,6 +93,7 @@ int main(int ac, char **av)
 	float y;
 	float z;
     map.rain_s = 3;
+    ft_printf("max %d\n", map.max_h);
     while (running)
     {
         glClear(GL_COLOR_BUFFER_BIT);
@@ -109,6 +110,7 @@ int main(int ac, char **av)
         }
 		i = 0;
 		j = 0;
+        ft_printf("max %d\n", map.max_h);
         while (i < ROW_SIZE - 1)
         {
 			j = -1;
@@ -117,22 +119,22 @@ int main(int ac, char **av)
 				x = (0.0f + (float)(i) - ROW_SIZE/2);
 				y = (0.0f + (float)(j) - ROW_SIZE/2);
 				glBegin(GL_POLYGON);
-				glColor3ub(color_red(25, map.mp[i * ROW_SIZE + j].z), 191, 69);
+				glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + j].z), 191, 69);
 				glVertex3f(iso_x(x, y, map.mp[i * ROW_SIZE + j].z / map.max_h, 0), iso_x(x, y, map.mp[i * ROW_SIZE + j].z / map.max_h, 1), 0.0f + map.mp[i * ROW_SIZE + j].z / map.max_h);
 
 				x = (1.0f + (float)(i) - ROW_SIZE/2);
 				y = (0.0f + (float)(j) - ROW_SIZE/2);
-				glColor3ub(color_red(25, map.mp[(i + 1) * ROW_SIZE + j].z), 191, 69);
+				glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + j].z), 191, 69);
 				glVertex3f(iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h, 0), iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h, 1), 0.0f + map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h);
 
 				x = (1.0f + (float)(i) - ROW_SIZE/2);
 				y = (1.0f + (float)(j) - ROW_SIZE/2);
-				glColor3ub(color_red(25, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z), 191, 69);
+				glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z), 191, 69);
 				glVertex3f(iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h, 0), iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h, 1), 0.0f + map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h);
 
 				x = (0.0f + (float)(i) - ROW_SIZE/2);
 				y = (1.0f + (float)(j) - ROW_SIZE/2);
-				glColor3ub(color_red(25, map.mp[i * ROW_SIZE + (j + 1)].z), 191, 69);
+				glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + (j + 1)].z), 191, 69);
 				glVertex3f(iso_x(x, y, map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h, 0), iso_x(x, y, map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h, 1), 0.0f + map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h);
 				glEnd();
                 // if (map.mp[i * ROW_SIZE + j].wh && map.mp[(i + 1) * ROW_SIZE + j].wh && map.mp[(i + 1) * ROW_SIZE + (j + 1)].wh && map.mp[i * ROW_SIZE + (j + 1)].wh)
