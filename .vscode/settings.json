@@ -3,6 +3,7 @@
         "mod_h.h": "c",
         "complex": "c",
         "cmath": "c",
-        "sdl.h": "c"
+        "sdl.h": "c",
+        "functional": "c"
     }
 }
