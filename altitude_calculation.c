@@ -33,7 +33,7 @@ void	alpha(t_map *map, int x, int y, double sum_d)
 void    altitude(t_map *map, int x, int y)
 {
     double	sum_d;
-	
+
 	int n_s_d;
 
     int		i;
@@ -83,12 +83,21 @@ void	altitude_calculation(t_map *map)
 	int		i;
 	double	dio;
 	double	l_i;
+	int l;
+	int k;
 
+	k = 0;
+	l = 0;
 	i = -1;
 	while(++i < MAP_SIZE)
 	{
 		if (map->mp[i].op)
+		{
+			k++;
 			continue;
+		}
+		l++;
 		altitude(map, map->mp[i].x, map->mp[i].y);
 	}
+	ft_printf("l = %d k = %d sum %d\n", l, k, l + k);
 }

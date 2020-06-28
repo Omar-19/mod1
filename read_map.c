@@ -9,8 +9,8 @@ void	init_map(t_point *mp)
 	{
 		mp[i].z = 0;
 		mp[i].op = -1;//-1;// ++++++++++++++++
-		mp[i].x = 0;
-		mp[i].y = 0;
+		mp[i].x = i % ROW_SIZE;
+		mp[i].y = i / ROW_SIZE;
 		mp[i].wh = 0;
 		mp[i].wh1 = 0;
 		i++;
@@ -29,7 +29,7 @@ void	init_x_y(t_map *map)
 	}
 }
 
-void    null_border(t_map *map)
+void	null_border(t_map *map)
 {
 	int i = -1;
 
@@ -40,7 +40,7 @@ void    null_border(t_map *map)
 
 void	psudo(t_point	*mp, int x, int y)
 {
-    int		i;
+	int		i;
 	int		j;
 	int		imax;
 	int		jmax;
@@ -63,7 +63,7 @@ void	psudo(t_point	*mp, int x, int y)
 
 void	init_coor(t_point	*mp, char **tab, t_map *map)
 {
-	int 	i;
+	int		i;
 	char	*line;
 	char	**fl;
 	int		cord;
@@ -74,7 +74,7 @@ void	init_coor(t_point	*mp, char **tab, t_map *map)
 		line = tab[i];
 		fl = ft_strsplit(line + 1, ',');
 		cord = (ft_atoi(fl[0]) * ROW_SIZE / SIZE_M) + (ft_atoi(fl[1]) * ROW_SIZE / SIZE_M) * ROW_SIZE;
-		mp[cord].z = ft_atoi(fl[2]) * ROW_SIZE / SIZE_M * 100;
+		mp[cord].z = ft_atoi(fl[2]) * ROW_SIZE / SIZE_M;
 		mp[cord].op = 1;
 		if (mp[cord].z > map->max_h)
 			map->max_h = mp[cord].z;
@@ -84,19 +84,12 @@ void	init_coor(t_point	*mp, char **tab, t_map *map)
 		psudo(mp, cord % ROW_SIZE, cord / ROW_SIZE);
 		i++;
 	}
-	// i = 0;
-	// while (i < MAP_SIZE)
-	// {
-	// 	ft_printf("%2d ", mp[i].z);
-	// 	if ((i + 1) % ROW_SIZE == 0)
-	// 		write(1, "\n", 1);
-	// 	i++;
-	// }
+
 }
 
-void    read_map(int fd, t_map *map)
+void	read_map(int fd, t_map *map)
 {
-    char	*line;
+	char	*line;
 	char	**tab;
 
 	line = NULL;

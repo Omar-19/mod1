@@ -52,7 +52,8 @@ void endSDL()
 
 int	color_red(int h_max, int h)
 {
-	float step = (191 - 136) / h_max;
+	float step = (float)(191 - 136) / (float)h_max;
+	// ft_printf("col %d step %lf max h %d cur_h %d\n", 136 + (int)(h * step), step, h_max, h);
 	return (136 + (int)(h * step));
 }
 
@@ -67,7 +68,7 @@ int main(int ac, char **av)
 	map.mp = (t_point *)malloc(sizeof(t_point) * MAP_SIZE);
 	init_map(map.mp);
 	read_map(fd, &map);
-	init_x_y(&map);
+	// init_x_y(&map);
 	null_border(&map);
 	int i = 0;
 	altitude_calculation(&map);
@@ -78,100 +79,125 @@ int main(int ac, char **av)
 			write(1, "\n", 1);
 		i++;
 	}
-	initGLandSDL();
-	SDL_Event event;
-	int running = 1;
-	glScalef(0.0005f * 2, 0.0005f * 2, 0.0005f * 2);
-	i = 0;
-	int j = 0;
+	// initGLandSDL(); #tut
+	// SDL_Event event;
+	// int running = 1;
+	// glScalef(0.005f * 2, 0.005f * 2, 0.005f * 2);
+	// i = 0;
+	// int j = 0;
 
-    // map.ar = 1; волна которая идет сверху
-    // map.size_a = 100;
-    // map.start = -1;
-    // add_wave(&map);
-	float x;
-	float y;
-	float z;
-	map.rain_s = 3;
-	while (running)
-	{
-		glClear(GL_COLOR_BUFFER_BIT);
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    // // map.ar = 1; волна которая идет сверху
+    // // map.size_a = 100;
+    // // map.start = -1;
+    // // add_wave(&map);
+	// float x;
+	// float y;
+	// float z;
+	// map.rain_s = 3;
+	// glRotatef(-70, 1, 0, 0);
+	// int l = 0;
+	// // glTranslatef(0, 0, 50);
+	// while (running)
+	// {
+	// 	glClear(GL_COLOR_BUFFER_BIT);
+	// 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-		while ( SDL_PollEvent(&event) )
-		{
-			switch(event.type)
-			{
-				case SDL_QUIT:
-				running = 0;
-				break;
-			}
-		}
-		i = 0;
-		j = 0;
-		while (i < ROW_SIZE - 1)
-		{
-			j = -1;
-			while (++j < ROW_SIZE - 1)
-			{
-				x = (0.0f + (float)(i) - ROW_SIZE/2);
-				y = (0.0f + (float)(j) - ROW_SIZE/2);
-				glBegin(GL_POLYGON);
-				glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + j].z), 191, 69);
-				glVertex3f(iso_x(x, y, map.mp[i * ROW_SIZE + j].z / map.max_h, 0), iso_x(x, y, map.mp[i * ROW_SIZE + j].z / map.max_h, 1), 0.0f + map.mp[i * ROW_SIZE + j].z / map.max_h);
+	// 	while ( SDL_PollEvent(&event) )
+	// 	{
+	// 		switch(event.type)
+	// 		{
+	// 			case SDL_QUIT:
+	// 			running = 0;
+	// 			break;
+	// 		}
+	// 	}
+	// 	i = 0;
+	// 	j = 0;
+	// 	while (i < ROW_SIZE - 1)
+	// 	{
+	// 		j = -1;
+	// 		while (++j < ROW_SIZE - 1)
+	// 		{
+	// 			x = (0.0f + (float)(i) - ROW_SIZE/2);
+	// 			y = (0.0f + (float)(j) - ROW_SIZE/2);
+	// 			glBegin(GL_POLYGON);
+	// 			if (map.mp[i * ROW_SIZE + j].z)
+	// 				glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + j].z), 191, 69);
+	// 			else
+	// 				glColor3ub(255, 0, 0);
 
-				x = (1.0f + (float)(i) - ROW_SIZE/2);
-				y = (0.0f + (float)(j) - ROW_SIZE/2);
-				glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + j].z), 191, 69);
-				glVertex3f(iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h, 0), iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h, 1), 0.0f + map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h);
+	// 			glVertex3f(x, y, 0.0f + (float)map.mp[i * ROW_SIZE + j].z);
+	// 			// glVertex2f(iso_x(x, y, (float)(map.mp[i * ROW_SIZE + j].z) / (float)(map.max_h), 0), iso_x(x, y, (float)(map.mp[i * ROW_SIZE + j].z) / (float)(map.max_h), 1));
+	// 			x = (1.0f + (float)(i) - ROW_SIZE/2);
+	// 			y = (0.0f + (float)(j) - ROW_SIZE/2);
+	// 			if (map.mp[i * ROW_SIZE + j].z)
+	// 				glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + j].z), 191, 69);
+	// 			else
+	// 				glColor3ub(255, 0, 0);
 
-				x = (1.0f + (float)(i) - ROW_SIZE/2);
-				y = (1.0f + (float)(j) - ROW_SIZE/2);
-				glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z), 191, 69);
-				glVertex3f(iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h, 0), iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h, 1), 0.0f + map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h);
+	// 			// glVertex3f(iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h, 0), iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h, 1), 0.0f + map.mp[(i + 1) * ROW_SIZE + j].z / map.max_h);
+	// 			// glVertex2f(iso_x(x, y, (float)(map.mp[(i + 1) * ROW_SIZE + j].z) / (float)(map.max_h), 0), iso_x(x, y, (float)(map.mp[(i + 1) * ROW_SIZE + j].z) / (float)(map.max_h), 1));
+	// 			glVertex3f(x, y, 0.0f + (float)map.mp[(i + 1) * ROW_SIZE + j].z);
+	// 			x = (1.0f + (float)(i) - ROW_SIZE/2);
+	// 			y = (1.0f + (float)(j) - ROW_SIZE/2);
+	// 			if (map.mp[i * ROW_SIZE + j].z)
+	// 				glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z), 191, 69);
+	// 			else
+	// 				glColor3ub(255, 0, 0);
 
-				x = (0.0f + (float)(i) - ROW_SIZE/2);
-				y = (1.0f + (float)(j) - ROW_SIZE/2);
-				glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + (j + 1)].z), 191, 69);
-				glVertex3f(iso_x(x, y, map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h, 0), iso_x(x, y, map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h, 1), 0.0f + map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h);
-				glEnd();
-                // if (map.mp[i * ROW_SIZE + j].wh && map.mp[(i + 1) * ROW_SIZE + j].wh && map.mp[(i + 1) * ROW_SIZE + (j + 1)].wh && map.mp[i * ROW_SIZE + (j + 1)].wh)
-                // {
-                //     glBegin(GL_POLYGON);
-                //     glColor3ub(0, 0, 255);
-                //     glVertex3f((0.0f + (float)(i) - ROW_SIZE/2), (0.0f + (float)(j) - ROW_SIZE/2), 0.0f);
+	// 			// glVertex3f(iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h, 0), iso_x(x, y, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h, 1), 0.0f + map.mp[(i + 1) * ROW_SIZE + (j + 1)].z / map.max_h);
+	// 			// glVertex2f(iso_x(x, y, (float)(map.mp[(i + 1) * ROW_SIZE + (j + 1)].z) / (float)(map.max_h), 0), iso_x(x, y, (float)(map.mp[(i + 1) * ROW_SIZE + (j + 1)].z) / (float)(map.max_h), 1));
+	// 			glVertex3f(x, y, 0.0f + (float)map.mp[(i + 1) * ROW_SIZE + (j + 1)].z);
+	// 			x = (0.0f + (float)(i) - ROW_SIZE/2);
+	// 			y = (1.0f + (float)(j) - ROW_SIZE/2);
+	// 			if (map.mp[i * ROW_SIZE + j].z)
+	// 				glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + (j + 1)].z), 191, 69);
+	// 			else
+	// 				glColor3ub(255, 0, 0);
+	// 			// glVertex3f(iso_x(x, y, map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h, 0), iso_x(x, y, map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h, 1), 0.0f + map.mp[i * ROW_SIZE + (j + 1)].z / map.max_h);
+	// 			// glVertex2f(iso_x(x, y, (float)(map.mp[i * ROW_SIZE + (j + 1)].z) / (float)(map.max_h), 0), iso_x(x, y, (float)(map.mp[i * ROW_SIZE + (j + 1)].z) / (float)( map.max_h), 1));
+	// 			glVertex3f(x, y, 0.0f + (float)map.mp[i * ROW_SIZE + (j + 1)].z);
+	// 			glEnd();
+    //             // if (map.mp[i * ROW_SIZE + j].wh && map.mp[(i + 1) * ROW_SIZE + j].wh && map.mp[(i + 1) * ROW_SIZE + (j + 1)].wh && map.mp[i * ROW_SIZE + (j + 1)].wh)
+    //             // {
+    //             //     glBegin(GL_POLYGON);
+    //             //     glColor3ub(0, 0, 255);
+    //             //     glVertex3f((0.0f + (float)(i) - ROW_SIZE/2), (0.0f + (float)(j) - ROW_SIZE/2), 0.0f);
 
-                //     glColor3ub(0, 0, 255);
-                //     glVertex3f((1.0f + (float)(i) - ROW_SIZE/2), (0.0f + (float)(j) - ROW_SIZE/2), 0.0f);
+    //             //     glColor3ub(0, 0, 255);
+    //             //     glVertex3f((1.0f + (float)(i) - ROW_SIZE/2), (0.0f + (float)(j) - ROW_SIZE/2), 0.0f);
 
-                //     glColor3ub(0, 0, 255);
-                //     glVertex3f((1.0f + (float)(i) - ROW_SIZE/2), (1.0f + (float)(j) - ROW_SIZE/2), 0.0f);
+    //             //     glColor3ub(0, 0, 255);
+    //             //     glVertex3f((1.0f + (float)(i) - ROW_SIZE/2), (1.0f + (float)(j) - ROW_SIZE/2), 0.0f);
 
-                //     glColor3ub(0, 0, 255);
-                //     glVertex3f((0.0f + (float)(i) - ROW_SIZE/2), (1.0f + (float)(j) - ROW_SIZE/2), 0.0f);
-                //     glEnd();
-                // }
-
-			}
-			i += 1;
-		}
-		// sleep(2);
-		up_water(map.mp);
-		// add_rain(&map);
-		// i = 0;
-		// while (i < MAP_SIZE)
-		// {
-		//     ft_printf("%2d ", map.mp[i].wh);
-		//     if ((i + 1) % 100 == 0)
-		//         write(1, "\n", 1);
-		//     i++;
-		// }
-		// write(1, "\n", 1);
-		// write(1, "water\n", 6);
-		wave_calc(map.mp);
-		update_water(map.mp);
-		glEnd();
-		SDL_GL_SwapWindow(win);
-	}
+    //             //     glColor3ub(0, 0, 255);
+    //             //     glVertex3f((0.0f + (float)(i) - ROW_SIZE/2), (1.0f + (float)(j) - ROW_SIZE/2), 0.0f);
+    //             //     glEnd();
+    //             // }
+	// 		}
+	// 		i += 1;
+	// 	}
+	// 	// glTranslatef(0, --l, 0);
+	// 	// sleep(2);
+	// 	up_water(map.mp);
+	// 	// add_rain(&map);
+	// 	// i = 0;
+	// 	// while (i < MAP_SIZE)
+	// 	// {
+	// 	//     ft_printf("%2d ", map.mp[i].wh);
+	// 	//     if ((i + 1) % 100 == 0)
+	// 	//         write(1, "\n", 1);
+	// 	//     i++;
+	// 	// }
+	// 	// write(1, "\n", 1);
+	// 	// write(1, "water\n", 6);
+	// 	// wave_calc(map.mp);
+	// 	update_water(map.mp);
+	// 	// running = 0;
+	// 	// glRotatef(45, 0, 1, 0);
+	// 	usleep(300000);
+	// 	glEnd();
+	// 	SDL_GL_SwapWindow(win);
+	// } tuutt
 	return (0);
 }
