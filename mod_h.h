@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
-/*   Updated: 2020/06/29 15:56:34 by btheia           ###   ########.fr       */
+/*   Updated: 2020/06/29 19:16:13 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 typedef struct			s_point
 {
 	int					z;
-	// double		 		lambda;
+	// double				lambda;
 	double				d_io;
 	int					op;
 	int					x;
@@ -34,7 +34,16 @@ typedef struct			s_point
 	int					y1;
 	float				wh;
 	float				wh1;
+	int					h;
 }						t_point;
+
+typedef struct			s_listp
+{
+	int					x;
+	int					y;
+	int					z;
+	struct s_listp *next;
+}						t_listp;
 
 typedef struct			s_map
 {
@@ -45,16 +54,17 @@ typedef struct			s_map
 	int					rain_s;
 	int					max_h;
 	t_point				*mp;
+	t_listp				*points;
 }						t_map;
 
 int						gnl(const int fd, char **line);
 void					init_map(t_point *mp);
 void					init_coor(t_point	*mp, char **tab, t_map *map);
-void    				read_map(int fd, t_map *map);
+void					read_map(int fd, t_map *map);
 void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
 void					null_border(t_map *map);
-void    				up_water(t_point *mp);
+void					up_water(t_point *mp);
 float					check_w(t_point *mp, int i, int j, float n, int *num);
 void					wave_calc(t_point *mp);
 void					update_water(t_point *mp);

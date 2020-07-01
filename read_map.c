@@ -1,5 +1,29 @@
 #include "mod_h.h"
 
+void	add_point(t_listp **head, int x, int y)
+{
+	t_listp *tmp;
+
+	if (head == NULL)
+		return;
+	if (*head == NULL)
+	{
+		*head = (t_listp *)malloc(sizeof(t_listp));
+		(*head)->x = x;
+		(*head)->y = y;
+		(*head)->next = NULL;
+		return;
+	}
+	tmp = *head;
+	while(tmp->next)
+		tmp = tmp->next;
+	tmp->next = (t_listp *)malloc(sizeof(t_listp));
+	tmp->next->x = x;
+	tmp->next->y = y;
+	tmp->next->next = NULL;
+	return;
+}
+
 void	init_map(t_point *mp)
 {
 	int	i;
@@ -13,6 +37,7 @@ void	init_map(t_point *mp)
 		mp[i].y = i / ROW_SIZE;
 		mp[i].wh = 0;
 		mp[i].wh1 = 0;
+		mp[i].h = 0;
 		i++;
 	}
 }
@@ -34,8 +59,13 @@ void	null_border(t_map *map)
 	int i = -1;
 
 	while (++i < MAP_SIZE)
+	{
 		if (map->mp[i].x == 0 || map->mp[i].x == (ROW_SIZE - 1) || map->mp[i].y == 0 || map->mp[i].y == (ROW_SIZE - 1))
+		{
 			map->mp[i].op = 1;
+			add_point(&(map->points), map->mp[i].x, map->mp[i].y);
+		}
+	}
 }
 
 void	psudo(t_point	*mp, int x, int y)
@@ -78,10 +108,8 @@ void	init_coor(t_point	*mp, char **tab, t_map *map)
 		mp[cord].op = 1;
 		if (mp[cord].z > map->max_h)
 			map->max_h = mp[cord].z;
-		// mp[(ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2].z = 3000;
-		// mp[(ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2].op = 1;
-		// x = (ROW_SIZE / 2) * ROW_SIZE + ROW_SIZE / 2;
 		psudo(mp, cord % ROW_SIZE, cord / ROW_SIZE);
+		add_point(&(map->points), cord % ROW_SIZE, cord / ROW_SIZE);
 		i++;
 	}
 

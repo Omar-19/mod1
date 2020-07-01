@@ -58,24 +58,121 @@ int	color_red(int h_max, int h)
 	return (136 + (int)(h * step));
 }
 
-void mov(float xpos, float zpos, float ypos, GLfloat yrot, GLfloat lookupdown)
+void water_f(int key, t_map *map)
 {
-	GLfloat x_m, y_m, z_m, u_m, v_m;
+	if (key == 0)
+		up_water(map->mp);
+	wave_calc(map->mp);
+}
 
-	GLfloat xtrans = -xpos;       // Проекция игрока на ось X
-	GLfloat ztrans = -zpos;       // Проекция игрока на ось Z
-	GLfloat ytrans = ypos;        // Проекция игрока на ось Y
+void	water_pol(int i, int j, t_map *map)
+{
+	int x;
+	int y;
 
-	// 360 градусный угол для поворота игрока
-	GLfloat sceneroty = 360.0f - yrot;
-	int numtriangles;           // Количество треугольников
-	// Вращать в соответствии с направлением взгляда игрока по вертикали
-	glRotatef(lookupdown,1.0f,0,0);
-	glRotatef(sceneroty,0,1.0f,0);//по горизонтали
 
-	// Проецировать сцену относительно игрока
-	glTranslatef(xtrans, ytrans, ztrans);
+	glColor3ub(0, 0, 255);
+	glBegin(GL_POLYGON);
 
+	//vverh
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	if ((float)map->mp[i * ROW_SIZE + j].wh + (float)map->mp[i * ROW_SIZE + j].z > (float)map->mp[i * ROW_SIZE + j].z)
+		glColor3ub(0, 0, 255);
+	else
+		glColor3ub(0, 255, 0);
+
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + j].wh + (float)map->mp[i * ROW_SIZE + j].z);
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	if ((float)map->mp[(i + 1) * ROW_SIZE + j].wh + (float)map->mp[(i + 1) * ROW_SIZE + j].z > (float)map->mp[(i + 1) * ROW_SIZE + j].z)
+		glColor3ub(0, 0, 255);
+	else
+		glColor3ub(0, 255, 0);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + j].wh + (float)map->mp[(i + 1) * ROW_SIZE + j].z);
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+
+	if ((float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].wh + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z > (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z)
+		glColor3ub(0, 0, 255);
+	else
+		glColor3ub(0, 255, 0);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].wh + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z);
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	if ((float)map->mp[i * ROW_SIZE + (j + 1)].wh + (float)map->mp[i * ROW_SIZE + (j + 1)].z > (float)map->mp[i * ROW_SIZE + (j + 1)].z)
+		glColor3ub(0, 0, 255);
+	else
+		glColor3ub(0, 255, 0);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + (j + 1)].wh + (float)map->mp[i * ROW_SIZE + (j + 1)].z);
+	//right
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + (j + 1)].wh + (float)map->mp[i * ROW_SIZE + (j + 1)].z);
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + (j + 1)].z);
+
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z);
+
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].wh + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z);
+	//front
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].wh + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z);
+
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + (j + 1)].z);
+
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + j].z);
+
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + j].wh + (float)map->mp[(i + 1) * ROW_SIZE + j].z);
+
+	//left
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + j].wh + (float)map->mp[(i + 1) * ROW_SIZE + j].z);
+
+	x = (1.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[(i + 1) * ROW_SIZE + j].z);
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + j].z);
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + j].wh + (float)map->mp[i * ROW_SIZE + j].z);
+
+	//back
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + j].wh + (float)map->mp[i * ROW_SIZE + j].z);
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (0.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + j].z);
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + (j + 1)].z);
+
+	x = (0.0f + (float)(i) - ROW_SIZE/2);
+	y = (1.0f + (float)(j) - ROW_SIZE/2);
+	glVertex3f(x, y, 0.0f + (float)map->mp[i * ROW_SIZE + (j + 1)].wh + (float)map->mp[i * ROW_SIZE + (j + 1)].z);
+	glEnd();
 }
 
 int main(int ac, char **av)
@@ -87,6 +184,7 @@ int main(int ac, char **av)
 
 	fd = open(av[1], O_RDONLY);
 	map.mp = (t_point *)malloc(sizeof(t_point) * MAP_SIZE);
+	map.points = NULL;
 	init_map(map.mp);
 	read_map(fd, &map);
 	null_border(&map);
@@ -107,6 +205,13 @@ int main(int ac, char **av)
 	// write(1, "\n", 1);
 	// write(1, "water\n", 6);
 
+	// t_listp *tmp;
+	// tmp = map.points;
+	// while(tmp){
+	// 	tmp = tmp->next;
+	// 	i++;
+	// }
+	// printf("%d\n", i);
 	// while (i < MAP_SIZE)
 	// {
 	// 	ft_printf("%2d ", map.mp[i].z);
@@ -115,6 +220,7 @@ int main(int ac, char **av)
 	// 	i++;
 	// }
 	initGLandSDL(); //#tut
+	// glEnable(GL_DEPTH_TEST);
 	SDL_Event event;
 	int running = 1;
 
@@ -135,7 +241,7 @@ int main(int ac, char **av)
 	int povz = -70;
 	// glRotatef(pov, 1, 0, 0);
 	int l = 0;
-
+	int water = 0;
 	gluLookAt(60.0, 60.0, 20.5, 0.0, 0.0, 0.0, -1.0, -1.0, 1.0);
 	// glTranslatef(0, 0, 50);
 
@@ -175,8 +281,10 @@ int main(int ac, char **av)
 						// // Переместиться по оси Z вектора направления игрока
 						// zpos -= (float)cos(heading*piover180) * 0.05f;
 						// ypos -= (float)sin(lookupdown*piover180) * 0.05f;
-						povx += 10;
-						glRotatef(povx, 1, 0, 0);
+						// povx += 10;
+						// glRotatef(povx, 1, 0, 0);
+						water_f(0, &map);
+						water = 1;
 					}
 					if (event.key.keysym.sym == SDLK_w)   // Клавиша стрелка вниз нажата?
 					{
@@ -185,8 +293,12 @@ int main(int ac, char **av)
 						// // Переместиться по оси Z вектора направления игрока
 						// zpos += (float)cos(heading*piover180) * 0.05f;
 						// ypos += (float)sin(lookupdown*piover180) * 0.05f;
-						povy += 10;
-						glRotatef(povy, 0, 1, 0);
+						// povy += 10;
+						// glRotatef(povy, 0, 1, 0);
+						plus += 0.001;
+						glScalef(plus * 2, plus * 2, plus * 2);
+
+						// glEnable(GL_DEPTH_TEST);
 					}
 					if (event.key.keysym.sym == SDLK_a)
 					{
@@ -205,9 +317,10 @@ int main(int ac, char **av)
 					break;
 			}
 		}
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+		// glPushMatrix();
 		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-
+		// glPopMatrix();
 		i = 0;
 		j = 0;
 		while (i < ROW_SIZE - 1)
@@ -253,6 +366,44 @@ int main(int ac, char **av)
 			}
 			i += 1;
 		}
+
+		i = 0;
+		j = 0;
+		if (water == 1)
+		{
+			while (i < ROW_SIZE - 1)
+			{
+				j = -1;
+				while (++j < ROW_SIZE - 1)
+				{
+					// x = (0.0f + (float)(i) - ROW_SIZE/2);
+					// y = (0.0f + (float)(j) - ROW_SIZE/2);
+					// glBegin(GL_POLYGON);
+					// glColor3ub(0, 0, 255);
+					// glVertex3f(x, y, 0.0f + (float)map.mp[i * ROW_SIZE + j].wh);
+
+					// x = (1.0f + (float)(i) - ROW_SIZE/2);
+					// y = (0.0f + (float)(j) - ROW_SIZE/2);
+					// glColor3ub(0, 0, 255);
+					// glVertex3f(x, y, 0.0f + (float)map.mp[(i + 1) * ROW_SIZE + j].wh);
+
+					// x = (1.0f + (float)(i) - ROW_SIZE/2);
+					// y = (1.0f + (float)(j) - ROW_SIZE/2);
+					// glColor3ub(0, 0, 255);
+					// glVertex3f(x, y, 0.0f + (float)map.mp[(i + 1) * ROW_SIZE + (j + 1)].wh);
+
+					// x = (0.0f + (float)(i) - ROW_SIZE/2);
+					// y = (1.0f + (float)(j) - ROW_SIZE/2);
+					// glColor3ub(0, 0, 255);
+					// glVertex3f(x, y, 0.0f + (float)map.mp[i * ROW_SIZE + (j + 1)].wh);
+
+					// glEnd();
+					water_pol(i, j, &map);
+				}
+				i += 1;
+			}
+		}
+		update_water(map.mp);
 		// glTranslatef(0, --l, 0);
 		// usleep(300000);
 		// up_water(map.mp);

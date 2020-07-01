@@ -26,15 +26,16 @@ void	alpha(t_map *map, int x, int y, double sum_d)
 	map->mp[x * ROW_SIZE + y].z = z;
 }
 
-void    altitude(t_map *map, int x, int y)
+void	altitude(t_map *map, int x, int y)
 {
-    double	sum_d;
+	double	sum_d;
 	double	sum_z_d;
 
-    int		i;
+	int		i;
 	int		j;
 	int		imax;
 	int		jmax;
+
 
 	sum_d = 0;
 	sum_z_d = 0;
@@ -60,6 +61,32 @@ void    altitude(t_map *map, int x, int y)
 	map->mp[x * ROW_SIZE + y].z = sum_z_d / sum_d;
 }
 
+void	altitude2(t_map *map, int x, int y)
+{
+	double	sum_d;
+	double	sum_z_d;
+	t_listp	*tmp;
+	int		i;
+	int		j;
+
+	int test = 0;
+	tmp = map->points;
+	sum_d = 0;
+	sum_z_d = 0;
+	while (tmp) //(i < imax) +++
+	{
+		i = tmp->y;
+		j = tmp->x;
+		if (sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
+		{
+			map->mp[i * ROW_SIZE + j].d_io = pow(sqrt((pow(i - y, 2) + pow(j - x, 2))), (-1) * POWER);
+			sum_d += map->mp[i * ROW_SIZE + j].d_io;
+			sum_z_d += map->mp[i * ROW_SIZE + j].z * map->mp[i * ROW_SIZE + j].d_io;
+		}
+		tmp = tmp->next;
+	}
+	map->mp[x * ROW_SIZE + y].z = sum_z_d / sum_d;
+}
 
 void	altitude_calculation(t_map *map)
 {
@@ -74,12 +101,13 @@ void	altitude_calculation(t_map *map)
 	i = -1;
 	while(++i < MAP_SIZE)
 	{
-		if (map->mp[i].op)
+		if (map->mp[i].op || map->mp[i].h)
 		{
 			k++;
 			continue;
 		}
 		l++;
+		map->mp[i].h = 1;
 		altitude(map, map->mp[i].x, map->mp[i].y);
 	}
 	ft_printf("l = %d k = %d sum %d\n", l, k, l + k);
