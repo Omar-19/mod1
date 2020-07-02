@@ -108,7 +108,7 @@ void	altitude_calculation(t_map *map)
 		}
 		l++;
 		map->mp[i].h = 1;
-		altitude(map, map->mp[i].x, map->mp[i].y);
+		altitude2(map, map->mp[i].x, map->mp[i].y);
 	}
 	ft_printf("l = %d k = %d sum %d\n", l, k, l + k);
 }

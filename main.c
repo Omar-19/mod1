@@ -236,15 +236,22 @@ int main(int ac, char **av)
 	float x;
 	float y;
 	map.rain_s = 3;
-	int povx = -70;
-	int povy = -70;
-	int povz = -70;
+	double povyx = 0;
+	double povyx_d = 0;
+	double povz = 65;
+	double povz_d = 0;
 	// glRotatef(pov, 1, 0, 0);
 	int l = 0;
 	int water = 0;
-	gluLookAt(60.0, 60.0, 20.5, 0.0, 0.0, 0.0, -1.0, -1.0, 1.0);
+	gluLookAt(60.0, 60.0, 30.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0); //2 * sqrt(60)
+	glRotatef(65, 0, 0, 1);
 	// glTranslatef(0, 0, 50);
-
+	double ugl_fi = 45.0;
+	double ugl_tet = 45.0;
+	double radious = sqrt(2 * 60 * 60 + 30 * 30);
+	double pi = 3.1415926535;
+	double rad_fi = 0;
+	double rad_tet = 0;
 	while (running) //running
 	{
 
@@ -255,72 +262,34 @@ int main(int ac, char **av)
 				case SDL_QUIT:
 					running = 0;
 					break;
-				case SDL_MOUSEBUTTONDOWN:
-					// printf("mouse x = %d , y = %d\n", event.button.x, event.button.y);
-					break;
-				case SDL_MOUSEBUTTONUP:
-					// printf("mouse x = %d , y = %d, dx = %d, dy = %d\n", event.motion.x, event.motion.y, event.motion.xrel, event.motion.yrel);
-					// if (event.motion.y != oldy)
-					// {
-					// 	lookupdown -= (oldy - event.motion.y) / sensitivity;
-					// }
-					// if (event.motion.x != oldx)
-					// {
-					// 	heading -= (oldx - event.motion.x) / sensitivity;
-					// 	yrot = heading;
-					// }
-					// oldx = event.motion.x;
-					// oldy = event.motion.y;
-					// mov(xpos, zpos, ypos, yrot, lookupdown);
-					break;
 				case SDL_KEYDOWN:
-					if (event.key.keysym.sym == SDLK_s )     // Клавиша стрелка вверх нажата?
+					if (event.key.keysym.sym == SDLK_s || event.key.keysym.sym == SDLK_w)     // Клавиша стрелка вверх нажата?
 					{
-						// // Переместиться по оси X вектора направления игрока
-						// xpos -= (float)sin(heading*piover180) * 0.05f;
-						// // Переместиться по оси Z вектора направления игрока
-						// zpos -= (float)cos(heading*piover180) * 0.05f;
-						// ypos -= (float)sin(lookupdown*piover180) * 0.05f;
-						// povx += 10;
-						// glRotatef(povx, 1, 0, 0);
-						water_f(0, &map);
-						water = 1;
-					}
-					if (event.key.keysym.sym == SDLK_w)   // Клавиша стрелка вниз нажата?
-					{
-						// Переместиться по оси X вектора направления игрока
-						// xpos += (float)sin(heading*piover180) * 0.05f;
-						// // Переместиться по оси Z вектора направления игрока
-						// zpos += (float)cos(heading*piover180) * 0.05f;
-						// ypos += (float)sin(lookupdown*piover180) * 0.05f;
-						// povy += 10;
-						// glRotatef(povy, 0, 1, 0);
-						plus += 0.001;
-						glScalef(plus * 2, plus * 2, plus * 2);
+						povyx_d = (event.key.keysym.sym == SDLK_w) ? -2.0: 2.0;
+						povyx += povyx_d;
+						if (povyx < 4 && povyx >= -30)
+							glRotatef(povyx_d, 1, -1, 0);
 
-						// glEnable(GL_DEPTH_TEST);
 					}
-					if (event.key.keysym.sym == SDLK_a)
+					if (event.key.keysym.sym == SDLK_a || event.key.keysym.sym == SDLK_d)
 					{
-						// xpos += (float)sin((heading-90)*piover180) * 0.05f;
-						// zpos += (float)cos((heading-90)*piover180) * 0.05f;
-						// ypos += (float)sin(lookupdown*piover180) * 0.05f;
-						povz += 10;
-						glRotatef(povz, 0, 0, 1);
+						povz_d = (event.key.keysym.sym == SDLK_a) ? 2.0: -2.0;
+						povz += povz_d;
+						if (povz < 133 && povz >= -45)
+							glRotatef(povz_d, 0, 0, 1);
+						// ft_printf("%lf\n", povz);
 					}
-					if (event.key.keysym.sym == SDLK_d)
-					{
-						// xpos -= (float)sin((heading-90)*piover180) * 0.05f;
-						// zpos -= (float)cos((heading-90)*piover180) * 0.05f;
-					}
-					// mov(xpos, zpos, ypos, yrot, lookupdown);
 					break;
 			}
 		}
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		// glPushMatrix();
-		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		rad_fi = (ugl_fi * (pi / 180));
+		rad_tet = (ugl_tet * (pi / 180));
+		// gluLookAt(radious * sin(rad_tet) * cos(rad_fi),radious * sin(rad_tet) * sin(rad_fi), radious * cos(rad_tet), 0.0, 0.0, 0.0, 0, 0, 1.0);
 		// glPopMatrix();
+		glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		//
 		i = 0;
 		j = 0;
 		while (i < ROW_SIZE - 1)
@@ -425,7 +394,9 @@ int main(int ac, char **av)
 		// glRotatef(45, 0, 1, 0);
 		// usleep(300000);
 		glEnd();
+
 		SDL_GL_SwapWindow(win);
 	} //tuutt
+
 	return (0);
 }
