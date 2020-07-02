@@ -2,8 +2,8 @@
 
 void	alpha(t_map *map, int x, int y, double sum_d)
 {
-    double	z;
-    int		i;
+	double	z;
+	int		i;
 	int		j;
 	int		imax;
 	int		jmax;
@@ -93,8 +93,8 @@ void	altitude_calculation(t_map *map)
 	int		i;
 	double	dio;
 	double	l_i;
-	int l;
-	int k;
+	int		l;
+	int		k;
 
 	k = 0;
 	l = 0;

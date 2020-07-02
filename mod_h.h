@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
-/*   Updated: 2020/06/29 19:16:13 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/02 20:30:11 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct			s_map
 	int					start;
 	int					rain_s;
 	int					max_h;
+	int					flow;
 	t_point				*mp;
 	t_listp				*points;
 }						t_map;
@@ -64,7 +65,7 @@ void					read_map(int fd, t_map *map);
 void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
 void					null_border(t_map *map);
-void					up_water(t_point *mp);
+void					up_water(t_point *mp, int key);
 float					check_w(t_point *mp, int i, int j, float n, int *num);
 void					wave_calc(t_point *mp);
 void					update_water(t_point *mp);
