@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/03 16:51:45 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/03 17:04:00 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define ROW_SIZE 300
 # define SIZE_M 20000
 # define RADIUS 170
-# define POWER 10
+# define POWER 5
 # define EDGE 1
 # define GL_SILENCE_DEPRECATION
 # include "libft/includes/header.h"

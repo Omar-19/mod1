@@ -219,43 +219,43 @@ void getNewCol(double max, double z, double *rgb)
 		rgb[1] = 255;
 		rgb[2] = 0;
 	}
-	if (0.05 < proc && proc <= 0.21)
+	if (0.05 < proc && proc <= 0.31)
 	{
 		rgb[0] = 0;
 		rgb[1] = 204;
 		rgb[2] = 0;
 	}
-	if (0.21 < proc && proc <= 0.39)
-	{
-		rgb[0] = 0;
-		rgb[1] = 153;
-		rgb[2] = 0;
-	}
-	if (0.39 < proc && proc <= 0.56)
+	// if (0.21 < proc && proc <= 0.39)
+	// {
+	// 	rgb[0] = 0;
+	// 	rgb[1] = 153;
+	// 	rgb[2] = 0;
+	// }
+	if (0.31 < proc && proc <= 0.56)
 	{
 		rgb[0] = 51;
 		rgb[1] = 102;
 		rgb[2] = 0;
 	}
-	if (0.56 < proc && proc <= 0.70)
+	if (0.56 < proc && proc <= 0.65)
 	{
 		rgb[0] = 153;
 		rgb[1] = 153;
 		rgb[2] = 0;
 	}
-	if (0.70 < proc && proc <= 0.85)
+	if (0.65 < proc && proc <= 0.80)
 	{
 		rgb[0] = 204;
 		rgb[1] = 102;
 		rgb[2] = 0;
 	}
-	if (0.85 < proc && proc <= 0.95)
+	if (0.80 < proc && proc <= 0.98)
 	{
 		rgb[0] = 255;
 		rgb[1] = 153;
 		rgb[2] = 51;
 	}
-	if (0.95 < proc)
+	if (0.98 < proc)
 	{
 		rgb[0] = 255;
 		rgb[1] = 229;
