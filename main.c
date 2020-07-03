@@ -213,13 +213,13 @@ void getNewCol(double max, double z, double *rgb)
 		rgb[2] = 0;
 		return;
 	}
-	if (proc <= 0.05)
+	if (proc <= 0.08)
 	{
 		rgb[0] = 0;
 		rgb[1] = 255;
 		rgb[2] = 0;
 	}
-	if (0.05 < proc && proc <= 0.31)
+	if (0.08 < proc && proc <= 0.31)
 	{
 		rgb[0] = 0;
 		rgb[1] = 204;
@@ -282,11 +282,14 @@ int main(int ac, char **av)
 	int i = 0;
 	int j = 0;
 
-	if (ac != 2)
+	if (ac < 2)
 	{
-		ft_printf("Usage: mod1 [map file]");
+		ft_printf("Usage: mod1 [map file] [-key]:\nnone - full start\n-f - read prepared map from file\n-s - save prepared map to file named \'map.md\'\n");
 		exit(0);
 	}
+	(ac == 2) ? map.rd = 0 : 0;
+	(ac == 3 && ft_strcmp("-f", av[2])) ? map.rd = 1 : 0;
+	(ac == 3 && ft_strcmp("-s", av[2])) ? map.rd = 3 : 0;
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		exit(0);
 	if ((map.mp = (t_point *)malloc(sizeof(t_point) * MAP_SIZE)) == NULL)
@@ -295,19 +298,24 @@ int main(int ac, char **av)
 	init_map(map.mp);
 	read_map(fd, &map);
 	null_border(&map);
-
-
+	t_listp *tmp;
+	tmp = map.points;
+	// while (i < 13)
+	// {
+	// 	ft_printf("%d\n", tmp->op);
+	// 	tmp = tmp->next;
+	// 	i++;
+	// }
+	// exit(0);
 	altitude_calculation(&map);
+
 	initGLandSDL();
-
-
 	glScalef(0.002 * 2, 0.002 * 2, 0.002 * 2);
 	gluLookAt(60.0, 60.0, 30.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0); //2 * sqrt(60)
 	glRotatef(65, 0, 0, 1);
 
 	while (running) //running
 	{
-
 		while ( SDL_PollEvent(&event) )
 		{
 			switch (event.type)
@@ -355,45 +363,28 @@ int main(int ac, char **av)
 			j = -1;
 			while (++j < ROW_SIZE - 1)
 			{
-				x = (0.0f + (float)(i) - ROW_SIZE/2);
-				y = (0.0f + (float)(j) - ROW_SIZE/2);
 				glBegin(GL_POLYGON);
 
-				// if (map.mp[i * ROW_SIZE + j].z)
-				// 	glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + j].z), 128, 0);
-				// else
+				x = (0.0f + (float)(i) - ROW_SIZE/2);
+				y = (0.0f + (float)(j) - ROW_SIZE/2);
 				getNewCol(map.max_h, map.mp[i * ROW_SIZE + j].z, rgb);
 				glColor3ub(rgb[0], rgb[1], rgb[2]);
 				glVertex3f(x, y, 0.0f + (float)map.mp[i * ROW_SIZE + j].z);
 
-
 				x = (1.0f + (float)(i) - ROW_SIZE/2);
 				y = (0.0f + (float)(j) - ROW_SIZE/2);
-				// if (map.mp[i * ROW_SIZE + j].z)
-				// 	glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + j].z), 191, 69);
-				// else
-				// 	glColor3ub(0, 255, 0);
 				getNewCol(map.max_h, map.mp[(i + 1) * ROW_SIZE + j].z, rgb);
 				glColor3ub(rgb[0], rgb[1], rgb[2]);
 				glVertex3f(x, y, 0.0f + (float)map.mp[(i + 1) * ROW_SIZE + j].z);
 
-
 				x = (1.0f + (float)(i) - ROW_SIZE/2);
 				y = (1.0f + (float)(j) - ROW_SIZE/2);
-				// if (map.mp[i * ROW_SIZE + j].z)
-				// 	glColor3ub(color_red(map.max_h, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z), 191, 69);
-				// else
-				// 	glColor3ub(0, 255, 0);
 				getNewCol(map.max_h, map.mp[(i + 1) * ROW_SIZE + (j + 1)].z, rgb);
 				glColor3ub(rgb[0], rgb[1], rgb[2]);
 				glVertex3f(x, y, 0.0f + (float)map.mp[(i + 1) * ROW_SIZE + (j + 1)].z);
 
 				x = (0.0f + (float)(i) - ROW_SIZE/2);
 				y = (1.0f + (float)(j) - ROW_SIZE/2);
-				// if (map.mp[i * ROW_SIZE + j].z)
-				// 	glColor3ub(color_red(map.max_h, map.mp[i * ROW_SIZE + (j + 1)].z), 191, 69);
-				// else
-				// 	glColor3ub(0, 255, 0);
 				getNewCol(map.max_h, map.mp[i * ROW_SIZE + (j + 1)].z, rgb);
 				glColor3ub(rgb[0], rgb[1], rgb[2]);
 				glVertex3f(x, y, 0.0f + (float)map.mp[i * ROW_SIZE + (j + 1)].z);

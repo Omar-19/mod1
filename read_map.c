@@ -1,6 +1,6 @@
 #include "mod_h.h"
 
-void	add_point(t_listp **head, int x, int y)
+void	add_point(t_listp **head, int x, int y, float z, int type)
 {
 	t_listp *tmp;
 
@@ -11,6 +11,8 @@ void	add_point(t_listp **head, int x, int y)
 		*head = (t_listp *)malloc(sizeof(t_listp));
 		(*head)->x = x;
 		(*head)->y = y;
+		(*head)->z = z;
+		(*head)->op = type;
 		(*head)->next = NULL;
 		return;
 	}
@@ -20,6 +22,8 @@ void	add_point(t_listp **head, int x, int y)
 	tmp->next = (t_listp *)malloc(sizeof(t_listp));
 	tmp->next->x = x;
 	tmp->next->y = y;
+	tmp->next->z = z;
+	tmp->next->op = type;
 	tmp->next->next = NULL;
 	return;
 }
@@ -63,7 +67,7 @@ void	null_border(t_map *map)
 		if (map->mp[i].x == 0 || map->mp[i].x == (ROW_SIZE - 1) || map->mp[i].y == 0 || map->mp[i].y == (ROW_SIZE - 1))
 		{
 			map->mp[i].op = 1;
-			add_point(&(map->points), map->mp[i].x, map->mp[i].y);
+			add_point(&(map->points), map->mp[i].x, map->mp[i].y, 0, -1);
 		}
 	}
 }
@@ -104,15 +108,38 @@ void	init_coor(t_point	*mp, char **tab, t_map *map)
 		line = tab[i];
 		fl = ft_strsplit(line + 1, ',');
 		cord = (ft_atoi(fl[0]) * ROW_SIZE / SIZE_M) + (ft_atoi(fl[1]) * ROW_SIZE / SIZE_M) * ROW_SIZE;
-		mp[cord].z = ft_atoi(fl[2]) * ROW_SIZE / SIZE_M;
+		mp[cord].z = (double)ft_atoi(fl[2]) * ROW_SIZE / SIZE_M;
 		mp[cord].op = 1;
 		if (mp[cord].z > map->max_h)
 			map->max_h = mp[cord].z;
 		psudo(mp, cord % ROW_SIZE, cord / ROW_SIZE);
-		add_point(&(map->points), cord % ROW_SIZE, cord / ROW_SIZE);
+		add_point(&(map->points), cord % ROW_SIZE, cord / ROW_SIZE, mp[cord].z, 1);
 		i++;
 	}
 
+}
+
+void	read_map2(int fd, t_map *map)
+{
+	char *line;
+	char **tab;
+	int linecount;
+	int i;
+	int main_count;
+
+	main_count = 0;
+	linecount = 0;
+	while (linecount < ROW_SIZE)
+	{
+		gnl(fd, &line);
+		if (line && *line)
+		{
+			i = 0;
+			tab = ft_strsplit(line, ' ');
+			init_coor(map->mp, tab, map);
+		}
+		(*line && line) ? free(line): 0;
+	}
 }
 
 void	read_map(int fd, t_map *map)
@@ -120,20 +147,25 @@ void	read_map(int fd, t_map *map)
 	char	*line;
 	char	**tab;
 
-	line = NULL;
-	map->max_h = -1;
-	while (gnl(fd, &line))
-	{
-		if (line && *line)
+	if (map->rd == 0 || map->rd == 3){
+		line = NULL;
+		map->max_h = -1;
+		while (gnl(fd, &line))
 		{
-			tab = ft_strsplit(line, ' ');
-			init_coor(map->mp, tab, map);
+			if (line && *line)
+			{
+				tab = ft_strsplit(line, ' ');
+				init_coor(map->mp, tab, map);
+			}
+			free(line);
 		}
-		free(line);
 	}
+	else
+		read_map2(fd, map);
+
 	map->ar = 1;
 	map->size_a = ROW_SIZE * 3;
 	map->start = -1;
 	map->flow = 0;
-	map->rain_s = 3;
+	map->rain_s = 7;
 }

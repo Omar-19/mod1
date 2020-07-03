@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/03 17:04:00 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/04 01:44:32 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 # define MAP_SIZE 90000
 # define ROW_SIZE 300
 # define SIZE_M 20000
-# define RADIUS 170
-# define POWER 5
+# define RADIUS 150
+# define POWER 8
 # define EDGE 1
 # define GL_SILENCE_DEPRECATION
 # include "libft/includes/header.h"
@@ -24,8 +24,7 @@
 
 typedef struct			s_point
 {
-	int					z;
-	// double				lambda;
+	float				z;
 	double				d_io;
 	int					op;
 	int					x;
@@ -41,7 +40,8 @@ typedef struct			s_listp
 {
 	int					x;
 	int					y;
-	int					z;
+	float				z;
+	int					op;
 	struct s_listp *next;
 }						t_listp;
 
@@ -54,6 +54,8 @@ typedef struct			s_map
 	int					rain_s;
 	int					max_h;
 	int					flow;
+	int					rd;
+	int					rain_time;
 	t_point				*mp;
 	t_listp				*points;
 }						t_map;

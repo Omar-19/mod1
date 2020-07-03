@@ -51,6 +51,8 @@ void	altitude(t_map *map, int x, int y)
 			if (map->mp[i * ROW_SIZE + j].op && sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
 			{
 				map->mp[i * ROW_SIZE + j].d_io = pow(sqrt((pow(i - y, 2) + pow(j - x, 2))), (-1) * POWER);
+				// if (map->mp[i * ROW_SIZE + j].op == -1)
+
 				sum_d += map->mp[i * ROW_SIZE + j].d_io;
 				sum_z_d += map->mp[i * ROW_SIZE + j].z * map->mp[i * ROW_SIZE + j].d_io;
 			}
@@ -68,20 +70,23 @@ void	altitude2(t_map *map, int x, int y)
 	t_listp	*tmp;
 	int		i;
 	int		j;
-
+	double kof;
 	int test = 0;
 	tmp = map->points;
 	sum_d = 0;
 	sum_z_d = 0;
-	while (tmp) //(i < imax) +++
+	while (tmp)
 	{
 		i = tmp->y;
 		j = tmp->x;
+		kof = 1;
 		if (sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
 		{
 			map->mp[i * ROW_SIZE + j].d_io = pow(sqrt((pow(i - y, 2) + pow(j - x, 2))), (-1) * POWER);
-			sum_d += map->mp[i * ROW_SIZE + j].d_io;
-			sum_z_d += map->mp[i * ROW_SIZE + j].z * map->mp[i * ROW_SIZE + j].d_io;
+			if (tmp->op == -1)
+				kof = 0.005;
+			sum_d += kof*map->mp[i * ROW_SIZE + j].d_io;
+			sum_z_d += map->mp[i * ROW_SIZE + j].z * kof*map->mp[i * ROW_SIZE + j].d_io;
 		}
 		tmp = tmp->next;
 	}
@@ -108,7 +113,6 @@ void	altitude_calculation(t_map *map)
 		}
 		l++;
 		map->mp[i].h = 1;
-		altitude(map, map->mp[i].x, map->mp[i].y);
+		altitude2(map, map->mp[i].x, map->mp[i].y);
 	}
-	ft_printf("l = %d k = %d sum %d\n", l, k, l + k);
 }
