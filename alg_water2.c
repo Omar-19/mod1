@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alg_water2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btheia <btheia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 14:03:03 by btheia            #+#    #+#             */
-/*   Updated: 2020/03/17 16:16:53 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/03 11:36:51 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	add_wave(t_map *map)
 	while (++i < map->size_a)
 	{
 		if (map->ar == 1 || map->ar == 4)
-			map->mp[i].wh += 100;
+			map->mp[i].wh += 500;
 		else if (map->ar == 2 && i % ROW_SIZE == 0)
-			map->mp[i].wh += 100;
-		else if (map->ar == 3 && i % ROW_SIZE == 99)
-			map->mp[i].wh += 100;
+			map->mp[i].wh += 500;
+		else if (map->ar == 3 && i % ROW_SIZE == ROW_SIZE - 1)
+			map->mp[i].wh += 500;
 	}
 }
 
@@ -36,6 +36,6 @@ void	add_rain(t_map *map)
 	while (++i < MAP_SIZE)
 	{
 		if (i % map->rain_s)
-			map->mp[i].wh += 0.3;
+			map->mp[i].wh += 0.05;
 	}
 }

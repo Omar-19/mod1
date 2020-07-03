@@ -131,4 +131,8 @@ void	read_map(int fd, t_map *map)
 		}
 		free(line);
 	}
+	map->ar = 1;
+	map->size_a = ROW_SIZE * 3;
+	map->start = -1;
+	map->flow = 0;
 }
