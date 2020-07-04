@@ -5,6 +5,7 @@
         "cmath": "c",
         "sdl.h": "c",
         "functional": "c",
-        "cstdio": "cpp"
+        "cstdio": "cpp",
+        "header.h": "c"
     }
 }
