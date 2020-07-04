@@ -4,6 +4,7 @@
         "complex": "c",
         "cmath": "c",
         "sdl.h": "c",
-        "functional": "c"
+        "functional": "c",
+        "cstdio": "cpp"
     }
 }

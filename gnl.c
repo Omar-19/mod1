@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gnl.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: btheia <btheia@student.42.fr>              +#+  +:+       +#+        */
+/*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:59:51 by btheia            #+#    #+#             */
-/*   Updated: 2019/12/15 17:39:36 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/04 20:23:38 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,6 @@ void	ft_clean(t_list **head, const int fd, char **line)
 	t_list	*ptr;
 	t_list	*tmp;
 
-	*line = (char *)malloc(sizeof(char));
-	**line = '\0';
 	tmp = *head;
 	ptr = NULL;
 	if (tmp->content_size == (size_t)fd)

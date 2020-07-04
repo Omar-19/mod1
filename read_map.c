@@ -95,6 +95,25 @@ void	psudo(t_point	*mp, int x, int y)
 	}
 }
 
+void	del_str(char **line)
+{
+	if (line && *line)
+		free(*line);
+	*line = NULL;
+}
+
+void	del_tab(char ***tab)
+{
+	char **p;
+	int i = -1;
+
+	p = *tab;
+	while(p[++i])
+		free(p[i]);
+	free(*tab);
+	*tab = NULL;
+}
+
 void	init_coor(t_point	*mp, char **tab, t_map *map)
 {
 	int		i;
@@ -114,10 +133,12 @@ void	init_coor(t_point	*mp, char **tab, t_map *map)
 			map->max_h = mp[cord].z;
 		psudo(mp, cord % ROW_SIZE, cord / ROW_SIZE);
 		add_point(&(map->points), cord % ROW_SIZE, cord / ROW_SIZE, mp[cord].z, 1);
+		del_tab(&fl);
 		i++;
 	}
 
 }
+
 
 void	read_map2(int fd, t_map *map)
 {
@@ -128,17 +149,23 @@ void	read_map2(int fd, t_map *map)
 	int main_count;
 
 	main_count = 0;
-	linecount = 0;
-	while (linecount < ROW_SIZE)
+	linecount = -1;
+	while (++linecount < ROW_SIZE && gnl(fd, &line))
 	{
-		gnl(fd, &line);
 		if (line && *line)
 		{
-			i = 0;
+			i = -1;
 			tab = ft_strsplit(line, ' ');
-			init_coor(map->mp, tab, map);
+			while(tab[++i])
+			{
+				map->mp[main_count].z = atof(tab[i]);
+				if (map->mp[main_count].z > map->max_h)
+					map->max_h = map->mp[main_count].z;
+				main_count++;
+			}
+			del_tab(&tab);
 		}
-		(*line && line) ? free(line): 0;
+		del_str(&line);
 	}
 }
 
@@ -147,7 +174,8 @@ void	read_map(int fd, t_map *map)
 	char	*line;
 	char	**tab;
 
-	if (map->rd == 0 || map->rd == 3){
+	if (map->rd == 0 || map->rd == 3)
+	{
 		line = NULL;
 		map->max_h = -1;
 		while (gnl(fd, &line))
@@ -156,8 +184,9 @@ void	read_map(int fd, t_map *map)
 			{
 				tab = ft_strsplit(line, ' ');
 				init_coor(map->mp, tab, map);
+				del_tab(&tab);
 			}
-			free(line);
+			del_str(&line);
 		}
 	}
 	else

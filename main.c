@@ -37,12 +37,15 @@ void initGLandSDL()
 
     // Инициализация OpenGL
 
-    glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // устанавливаем фоновый цвет на черный
-    glClearDepth(1.0);
-       glDepthFunc(GL_LESS);
-    // glEnable(GL_DEPTH_TEST); // включаем тест глубины
-    glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f); // устанавливаем фоновый цвет на черный
+	glClearDepth(1.0);
+	glDepthFunc(GL_LESS);
+	// glEnable(GL_DEPTH_TEST); // включаем тест глубины
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	glScalef(0.002 * 2, 0.002 * 2, 0.002 * 2);
+	gluLookAt(60.0, 60.0, 30.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
+	glRotatef(65, 0, 0, 1);
 }
 
 void endSDL()
@@ -225,12 +228,6 @@ void getNewCol(double max, double z, double *rgb)
 		rgb[1] = 204;
 		rgb[2] = 0;
 	}
-	// if (0.21 < proc && proc <= 0.39)
-	// {
-	// 	rgb[0] = 0;
-	// 	rgb[1] = 153;
-	// 	rgb[2] = 0;
-	// }
 	if (0.31 < proc && proc <= 0.56)
 	{
 		rgb[0] = 51;
@@ -263,7 +260,48 @@ void getNewCol(double max, double z, double *rgb)
 	}
 }
 
-int main(int ac, char **av)
+void	save_file(t_map *map)
+{
+	int i = 0;
+	int j = 0;
+	int fd_out = 0;
+
+	fd_out = open("map.mods", O_WRONLY | O_TRUNC | O_CREAT, S_IWRITE | S_IREAD);
+	if (fd_out == -1)
+		exit(0);
+	while (i < MAP_SIZE)
+	{
+		dprintf(fd_out, "%2.2lf ", map->mp[i].z);
+		if ((i + 1) % ROW_SIZE == 0)
+			dprintf(fd_out, "\n");
+		i++;
+	}
+}
+
+void	delete_mem(t_map *map)
+{
+	t_listp *tmp;
+	t_listp *next;
+
+	if (map->mp)
+		free(map->mp);
+	if (map->points)
+	{
+		tmp = map->points;
+		while(tmp->next)
+		{
+			next = tmp->next;
+			free(tmp);
+			tmp = NULL;
+			tmp = next;
+		}
+		free(tmp);
+	}
+	map->mp = NULL;
+	map->points = NULL;
+}
+
+int		main(int ac, char **av)
 {
 
 	t_map map;
@@ -288,8 +326,8 @@ int main(int ac, char **av)
 		exit(0);
 	}
 	(ac == 2) ? map.rd = 0 : 0;
-	(ac == 3 && ft_strcmp("-f", av[2])) ? map.rd = 1 : 0;
-	(ac == 3 && ft_strcmp("-s", av[2])) ? map.rd = 3 : 0;
+	(ac == 3 && !ft_strcmp("-f", av[2])) ? map.rd = 1 : 0;
+	(ac == 3 && !ft_strcmp("-s", av[2])) ? map.rd = 3 : 0;
 	if ((fd = open(av[1], O_RDONLY)) == -1)
 		exit(0);
 	if ((map.mp = (t_point *)malloc(sizeof(t_point) * MAP_SIZE)) == NULL)
@@ -298,23 +336,11 @@ int main(int ac, char **av)
 	init_map(map.mp);
 	read_map(fd, &map);
 	null_border(&map);
-	t_listp *tmp;
-	tmp = map.points;
-	// while (i < 13)
-	// {
-	// 	ft_printf("%d\n", tmp->op);
-	// 	tmp = tmp->next;
-	// 	i++;
-	// }
-	// exit(0);
-	altitude_calculation(&map);
+	(map.rd == 0 || map.rd == 3) ? altitude_calculation(&map) : 0;
 
-	initGLandSDL();
-	glScalef(0.002 * 2, 0.002 * 2, 0.002 * 2);
-	gluLookAt(60.0, 60.0, 30.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0); //2 * sqrt(60)
-	glRotatef(65, 0, 0, 1);
+	// initGLandSDL();
 
-	while (running) //running
+	while (0 && running)
 	{
 		while ( SDL_PollEvent(&event) )
 		{
@@ -394,10 +420,11 @@ int main(int ac, char **av)
 					water_pol(i, j, &map);
 			}
 		}
-
 		wave_calc(map.mp);
 		update_water(map.mp);
 		SDL_GL_SwapWindow(win);
 	}
+	(map.rd == 2) ? save_file(&map) : 0;
+	delete_mem(&map);
 	return (0);
 }

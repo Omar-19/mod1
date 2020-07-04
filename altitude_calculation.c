@@ -51,8 +51,6 @@ void	altitude(t_map *map, int x, int y)
 			if (map->mp[i * ROW_SIZE + j].op && sqrt((pow(abs(i - y), 2) + pow(abs(j - x), 2))) < RADIUS)
 			{
 				map->mp[i * ROW_SIZE + j].d_io = pow(sqrt((pow(i - y, 2) + pow(j - x, 2))), (-1) * POWER);
-				// if (map->mp[i * ROW_SIZE + j].op == -1)
-
 				sum_d += map->mp[i * ROW_SIZE + j].d_io;
 				sum_z_d += map->mp[i * ROW_SIZE + j].z * map->mp[i * ROW_SIZE + j].d_io;
 			}
@@ -70,8 +68,8 @@ void	altitude2(t_map *map, int x, int y)
 	t_listp	*tmp;
 	int		i;
 	int		j;
-	double kof;
-	int test = 0;
+	double	kof;
+
 	tmp = map->points;
 	sum_d = 0;
 	sum_z_d = 0;
