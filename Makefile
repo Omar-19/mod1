@@ -1,91 +1,51 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: btheia <marvin@42.fr>                      +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2019/11/10 21:07:00 by flogan            #+#    #+#              #
-#    Updated: 2020/07/05 02:56:57 by btheia           ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
+SRCDIR	= ./src/
+INCDIR	= ./include/
+OBJDIR	= ./obj/
 
-# LIBS = -framework OpenGL -I$(HOME)/.brew/include/SDL2 -L$(HOME)/.brew/lib -lSDL2  -D_THREAD_SAFE libftprintf.a
-# LIBS = -framework OpenGL -I/usr/local/Cellar/sdl2 -L$(HOME)/.brew/lib -lSDL2  -D_THREAD_SAFE libftprintf.a
-# NAME = mod1
-# LIBS =
-# all:
-# 	echo $(HOME)
-# 	gcc $(SRC) $(LIBS) -o $(NAME)
-
-ASM =			mod1
-NAME =			$(ASM)
-LIBFT_A =		libftprintf.a
-LIBFT =			ft_printf/
-HEADER =		include/mod_h.h
-LIBFT_DIR_A =  	ft_printf/libftprintf.a
-KEY = -Wno-deprecated-declarations -framework OpenGL -I /usr/local/include/SDL2 -lSDL2 -D_THREAD_SAFE $(LIBFT_DIR_A)
-
-COMP =			gcc -g $(KEY) $(LIBS) -I include -I ft_printf/includes -c -o
-
-OBJ_DIR =		obj/
-
-ASM_DIR =		src/
-
-ASM_SRC =   alg_water2.c \
+GCC = gcc -Wall -Wextra -Werror
+NAME = mod1
+SRCS = 		alg_water2.c \
 			alg_watet.c \
 			altitude_calculation.c \
 			gnl.c \
 			iso_met.c \
 			main.c \
 			read_map.c \
+			water_print.c \
+			main_h1.c \
+			main_h2.c \
 
-ASM_OBJ =			$(ASM_SRC:%.c=%.o)
+HEAD = -I$(INCDIR)
 
-OBJ =				$(ASM_OBJ)
+MAKES = ./ft_printf/libftprintf.a
+LIB := -framework OpenGL -lSDL2 -D_THREAD_SAFE ./ft_printf/libftprintf.a
+HEAD += -I /usr/local/include/SDL2
 
-SRC_PATH_ASM =		$(ASM_SRC:%=$(ASM_DIR)%)
+OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
+DEPENDS = $(addprefix $(OBJDIR), $(SRCS:.c=.d))
 
-SRC_PATH =			$(SRC_PATH_ASM)
+all: $(NAME)
 
-OBJ_PATH_ASM =		$(addprefix $(OBJ_DIR), $(ASM_OBJ))
+$(OBJDIR)%.o: $(SRCDIR)%.c
+	$(GCC) -Wno-deprecated-declarations -MD -o $@ -c $(HEAD) $<
 
-OBJ_PATH =			$(OBJ_PATH_ASM)
+$(MAKES):
+	make -C  ft_printf/
 
-all:			color do_libft $(OBJ_DIR) $(NAME)
-				@echo "\\n"Create mod1"\\n"
+-include $(DEPENDS)
 
-$(OBJ_DIR):
-				@mkdir -p $(OBJ_DIR)
-				@echo Create: Object directory
+$(NAME): $(MAKES) $(OBJS)
+	$(GCC) $(OBJS) $(LIB) $(HEAD) -o $(NAME)
 
-$(NAME):		$(OBJ_PATH) $(HEADER)
-				@gcc $(KEY) $(OBJ_PATH_ASM) $(LIBFT_DIR_A) -o $(ASM)
-				# @gcc -L ~/.brew/lib -lSDL2 -lSDL2_ttf -I include/ -I ft_printf/includes/ ft_printf/libftprintf.a $(OBJ_PATH_DIS_ASM) -o $(DIS_ASM)
+clean:
+	rm -f $(OBJS)
+	rm -f $(DEPENDS)
+	make -C ft_printf/ fclean
 
-$(OBJ_PATH_ASM):			$(SRC_PATH_ASM)
-							@$(MAKE) $(ASM_OBJ)
+fclean: clean
+	rm -f $(NAME)
+	make -C ft_printf/ fclean
 
-$(ASM_OBJ):				$(LIBFT_DIR_A) $(HEADER)
-						@echo Create: $(@:obj/%=%)"\x1b[1A\x1b[M"
-						@$(COMP) $(OBJ_DIR)$@ $(ASM_DIR)$(@:%.o=%.c)
+re: fclean all
 
-do_libft:
-				@make -C $(LIBFT)
-
-color:.
-				@echo "\x1b[36m""\x1b[1A\x1b[M"
-
-clean:			color
-				@/bin/rm -rf $(OBJ_DIR) $(FT_PRINTF_A) $(LIBFT_A)
-				@make -C $(LIBFT) clean
-				@echo Cleaned libft object files
-
-fclean:			clean
-				@/bin/rm -f $(NAME) $(FT_PRINTF_A) $(LIBFT_A)
-				@make -C $(LIBFT) fclean
-				@echo Cleaned $(NAME)
-
-re: 			fclean all
-
-.PHONY:			all clean flcean re color
+.PHONY: clean fclean re

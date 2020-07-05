@@ -6,12 +6,12 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 02:20:56 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 16:19:30 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MOD_H
-# define MOD_H
+#ifndef MOD_H_H
+# define MOD_H_H
 # define MAP_SIZE 90000
 # define ROW_SIZE 300
 # define SIZE_M 20000
@@ -21,6 +21,10 @@
 # define GL_SILENCE_DEPRECATION
 # include "../ft_printf/includes/header.h"
 # include <math.h>
+# include <stdio.h>
+# include <SDL.h>
+# include <OpenGL/gl.h>
+# include <OpenGL/glu.h>
 
 typedef struct			s_point
 {
@@ -42,7 +46,7 @@ typedef struct			s_listp
 	int					y;
 	float				z;
 	int					op;
-	struct s_listp *next;
+	struct s_listp		*next;
 }						t_listp;
 
 typedef struct			s_map
@@ -56,6 +60,13 @@ typedef struct			s_map
 	int					flow;
 	int					rd;
 	int					rain_time;
+	double				povyx;
+	double				povyx_d;
+	double				povz;
+	double				povz_d;
+	int					running;
+	int					water;
+	int					fd;
 	t_point				*mp;
 	t_listp				*points;
 }						t_map;
@@ -68,11 +79,27 @@ void					init_x_y(t_map *map);
 void					altitude_calculation(t_map *map);
 void					null_border(t_map *map);
 void					up_water(t_point *mp, int key);
-float					check_w(t_point *mp, int i, int j, float n, int *num);
-void					wave_calc(t_point *mp);
+float					check_w(t_point *mp, int *a, float n, int *num);
+void					wave_calc(t_point *mp, t_map *map, int i);
 void					update_water(t_point *mp);
 void					add_wave(t_map *map);
 void					add_rain(t_map *map);
 float					iso_x(float x, float y, float z, int i);
+void					water_f(int key, t_map *map);
+void					psudo(t_point *mp, int x, int y);
+void					add_point(t_listp **head, int x, int y, int type);
+void					water_pol2(int i, int j, t_map *map);
+void					save_file(t_map *map);
+void					rain_info(t_map *map, int key);
+void					water_pol(int i, int j, t_map *map);
+void					water_pol_h(int i, int j, t_map *map);
+int						h_bool(int i, int j, t_map *map);
+void					keyb2(SDL_Event event, t_map *map);
+void					delete_mem(t_map *map);
+void					getnewcol(double max, double z, double *rgb);
+void					getnewcol2(double proc, double *rgb);
+void					getnewcol3(double proc, double *rgb);
+void					endsdl(void);
+void					earn_c(int i, int j, t_map *map, double *rgb);
 
 #endif

@@ -6,6 +6,8 @@
         "sdl.h": "c",
         "functional": "c",
         "cstdio": "cpp",
-        "header.h": "c"
+        "header.h": "c",
+        "algorithm": "c",
+        "cstdlib": "c"
     }
 }

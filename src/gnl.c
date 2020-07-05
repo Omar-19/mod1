@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/18 17:59:51 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 02:29:24 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 10:56:10 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ void	ft_clean(t_list **head, const int fd, char **line)
 	t_list	*ptr;
 	t_list	*tmp;
 
+	if (line)
+		tmp = *head;
 	tmp = *head;
 	ptr = NULL;
 	if (tmp->content_size == (size_t)fd)
