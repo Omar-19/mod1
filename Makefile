@@ -24,7 +24,10 @@ HEAD += -I /usr/local/include/SDL2
 OBJS = $(addprefix $(OBJDIR), $(SRCS:.c=.o))
 DEPENDS = $(addprefix $(OBJDIR), $(SRCS:.c=.d))
 
-all: $(NAME)
+all: $(OBJDIR) $(NAME)
+
+$(OBJDIR):
+			@mkdir -p $(OBJDIR)
 
 $(OBJDIR)%.o: $(SRCDIR)%.c
 	$(GCC) -Wno-deprecated-declarations -MD -o $@ -c $(HEAD) $<
