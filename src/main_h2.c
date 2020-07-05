@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/05 16:06:22 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 16:06:49 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 17:24:38 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,12 +78,12 @@ void	getnewcol(double max, double z, double *rgb)
 	getnewcol2(proc, rgb);
 }
 
-void	delete_mem(t_map *map)
+void	delete_mem(t_map *map, int key)
 {
 	t_listp *tmp;
 	t_listp *next;
 
-	(map->rd == 2) ? save_file(map) : 0;
+	(map->rd == 3 && !key) ? save_file(map) : 0;
 	if (map->mp)
 		free(map->mp);
 	if (map->points)
@@ -101,6 +101,8 @@ void	delete_mem(t_map *map)
 	map->mp = NULL;
 	map->points = NULL;
 	endsdl();
+	if (key)
+		exit(0);
 }
 
 void	keyb2(SDL_Event event, t_map *map)

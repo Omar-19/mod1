@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 16:38:14 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 15:00:02 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 17:24:58 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	null_border(t_map *map)
 		if (map->mp[i].x == 0 || map->mp[i].x == (ROW_SIZE - 1)
 			|| map->mp[i].y == 0 || map->mp[i].y == (ROW_SIZE - 1))
 		{
-			map->mp[i].op = 1;
+			map->mp[i].op = 2;
 			add_point(&(map->points), map->mp[i].x, map->mp[i].y, -1);
 		}
 	}
@@ -100,4 +100,17 @@ void	psudo(t_point *mp, int x, int y)
 		}
 		i++;
 	}
+}
+
+int		len_tab(char **tab)
+{
+	int i;
+
+	i = -1;
+	while (tab[++i])
+	{
+	}
+	if (i != 3)
+		ft_printf("MAP ERROR!\n");
+	return (i);
 }

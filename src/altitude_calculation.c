@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/05 14:36:02 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 14:48:38 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 17:05:30 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ double	a2h(t_map *map, int i, int j, int key)
 	double	kof;
 
 	kof = 1;
-	if (key == -1)
+	if (key == -1 || key == 2)
 		kof = 0.005;
 	return (kof * map->mp[i * ROW_SIZE + j].d_io);
 }

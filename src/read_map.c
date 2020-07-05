@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/05 14:50:36 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 15:03:05 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 17:23:36 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ void	init_coor(t_point *mp, char **tab, t_map *map)
 	{
 		line = tab[i];
 		fl = ft_strsplit(line + 1, ',');
+		(len_tab(fl) != 3) ? delete_mem(map, 1) : 0;
 		cord = (ft_atoi(fl[0]) * ROW_SIZE / SIZE_M) +
 			(ft_atoi(fl[1]) * ROW_SIZE / SIZE_M) * ROW_SIZE;
 		mp[cord].z = (double)ft_atoi(fl[2]) * ROW_SIZE / SIZE_M;
 		mp[cord].op = 1;
-		if (mp[cord].z > map->max_h)
-			map->max_h = mp[cord].z;
+		(mp[cord].z > map->max_h) ? map->max_h = mp[cord].z : 0;
 		psudo(mp, cord % ROW_SIZE, cord / ROW_SIZE);
 		add_point(&(map->points), cord % ROW_SIZE, cord / ROW_SIZE, 1);
 		del_tab(&fl);

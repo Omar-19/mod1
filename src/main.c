@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/05 15:04:22 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 16:11:54 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 17:15:25 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,6 @@ int		main(int ac, char **av)
 	(map.rd == 0 || map.rd == 3) ? altitude_calculation(&map) : 0;
 	initglandsdl();
 	main_loop(&map);
-	delete_mem(&map);
+	delete_mem(&map, 0);
 	return (0);
 }

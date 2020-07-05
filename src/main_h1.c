@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/05 16:04:10 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 16:05:12 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 16:52:37 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,10 @@ void	save_file(t_map *map)
 	i = 0;
 	fd_out = open("map.mods", O_WRONLY | O_TRUNC | O_CREAT, S_IWRITE | S_IREAD);
 	if (fd_out == -1)
+	{
+		ft_printf("Cannot save map!\n");
 		exit(0);
+	}
 	while (i < MAP_SIZE)
 	{
 		dprintf(fd_out, "%2.2lf ", map->mp[i].z);

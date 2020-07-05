@@ -6,7 +6,7 @@
 /*   By: btheia <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/17 19:43:26 by btheia            #+#    #+#             */
-/*   Updated: 2020/07/05 16:19:30 by btheia           ###   ########.fr       */
+/*   Updated: 2020/07/05 17:23:48 by btheia           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,12 @@ void					water_pol(int i, int j, t_map *map);
 void					water_pol_h(int i, int j, t_map *map);
 int						h_bool(int i, int j, t_map *map);
 void					keyb2(SDL_Event event, t_map *map);
-void					delete_mem(t_map *map);
+void					delete_mem(t_map *map, int key);
 void					getnewcol(double max, double z, double *rgb);
 void					getnewcol2(double proc, double *rgb);
 void					getnewcol3(double proc, double *rgb);
 void					endsdl(void);
 void					earn_c(int i, int j, t_map *map, double *rgb);
+int						len_tab(char **tab);
 
 #endif
